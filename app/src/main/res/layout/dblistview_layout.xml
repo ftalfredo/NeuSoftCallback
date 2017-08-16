@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dblistview_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dip" >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/rowLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RowID: " />
+        <TextView
+            android:id="@+id/rowVal"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+        <TextView
+            android:id="@+id/duLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DU: "/>
+        <TextView
+            android:id="@+id/duVal"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/mdLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MD: "/>
+        <TextView
+            android:id="@+id/mdVal"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/gpsTSlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GPStimeStamp: " />
+        <TextView
+            android:id="@+id/gpsTSval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/uriLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MediaURI: " />
+        <TextView
+            android:id="@+id/mediaURI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
+</LinearLayout>

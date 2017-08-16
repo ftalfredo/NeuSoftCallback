@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Fujitsu ODDC</string>
+    <string name="action_settings">Settings</string>
+    <string name="base_url">http://192.168.168.77:8080//</string>
+    <string name="database_name">ODDC</string>
+    <integer name="database_version">1</integer>
+</resources>

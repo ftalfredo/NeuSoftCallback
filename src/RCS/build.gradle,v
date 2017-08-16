@@ -1,0 +1,64 @@
+head	1.2;
+access;
+symbols;
+locks
+	jalfredo:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2017.08.10.21.01.17;	author jalfredo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2017.08.10.16.29.53;	author jalfredo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a5 3
+        maven {
+            url 'https://repo.spring.io/libs-milestone'
+        }
+@

@@ -1,0 +1,30 @@
+head	1.1;
+access;
+symbols;
+locks
+	jalfredo:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2017.08.12.02.06.41;	author jalfredo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+@

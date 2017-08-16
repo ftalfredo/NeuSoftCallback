@@ -1,0 +1,565 @@
+head	1.17;
+access;
+symbols;
+locks
+	jalfredo:1.17; strict;
+comment	@# @;
+
+
+1.17
+date	2017.08.15.01.21.46;	author jalfredo;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2017.08.15.00.11.33;	author jalfredo;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2017.08.14.22.48.48;	author jalfredo;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2017.08.12.02.06.52;	author jalfredo;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2017.08.12.00.52.19;	author jalfredo;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2017.08.11.18.53.26;	author jalfredo;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2017.08.11.17.30.35;	author jalfredo;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2017.08.11.16.32.14;	author jalfredo;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2017.08.11.02.20.25;	author jalfredo;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2017.08.11.00.07.54;	author jalfredo;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2017.08.02.23.46.29;	author jalfredo;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2017.08.02.17.17.43;	author jalfredo;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2017.08.02.16.21.35;	author jalfredo;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2017.07.28.17.52.58;	author jalfredo;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2017.07.25.21.27.14;	author jalfredo;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2017.07.25.18.39.07;	author jalfredo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2017.07.25.16.52.56;	author jalfredo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.17
+log
+@*** empty log message ***
+@
+text
+@<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <Button
+            android:id="@@+id/btnStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onStart"
+            android:text="START" />
+        <Button
+            android:id="@@+id/btnDropTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onDropTable"
+            android:text="Drop Table" />
+        <Button
+            android:id="@@+id/btnStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onStop"
+            android:text="STOP" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <Button
+            android:id="@@+id/btnJobList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getJobList"
+            android:text="Get Job List" />
+        <Button
+            android:id="@@+id/btnPostOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onCheckFS"
+            android:text="CHECK FS" />
+        <TextView
+            android:id="@@+id/fsCount"
+            android:layout_width="168dp"
+            android:layout_height="match_parent"
+            android:textSize="24sp"
+            android:text=""
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@@+id/dbCountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DB COUNT" />
+
+        <TextView
+            android:id="@@+id/dbCount"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:textSize="24sp"
+            android:text=""
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <Button
+            android:id="@@+id/btnReadFS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onViewFS"
+            android:text="FileSpace"
+            android:visibility="visible" />
+        <Button
+            android:id="@@+id/btnReadDB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onViewDB"
+            android:text="View DB"
+            android:visibility="visible" />
+        <Button
+            android:id="@@+id/btnDELETE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onDelete"
+            android:text="DELETE"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@@+id/msgView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text=""
+        android:visibility="visible" />
+    <ListView
+        android:id="@@+id/fslistView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.40" />
+
+    <ListView
+        android:id="@@+id/dblistView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".60" />
+
+</LinearLayout>
+@
+
+
+1.16
+log
+@*** empty log message ***
+@
+text
+@d104 7
+@
+
+
+1.15
+log
+@*** empty log message ***
+@
+text
+@d51 9
+a59 2
+            android:onClick="postOneData"
+            android:text="Post One" />
+@
+
+
+1.14
+log
+@*** empty log message ***
+@
+text
+@d22 1
+a22 1
+        <!--Button
+d27 1
+a27 1
+            android:text="Drop Table" /  -->
+@
+
+
+1.13
+log
+@*** empty log message ***
+@
+text
+@d102 2
+a103 2
+        android:layout_height="128dp"
+        android:layout_weight="0.11"
+d106 5
+d115 2
+a116 1
+        android:layout_height="188dp" />
+@
+
+
+1.12
+log
+@update before Yuri pull
+@
+text
+@d63 1
+a63 1
+            android:id="@@+id/viewDB"
+a65 1
+            android:onClick="onViewDB"
+d69 1
+a69 1
+            android:id="@@+id/valDB"
+d78 2
+a79 3
+    <Button
+        android:id="@@+id/btnRead"
+        android:layout_width="wrap_content"
+d81 18
+a98 3
+        android:onClick="onViewFS"
+        android:text="FileSpace"
+        android:visibility="visible" />
+d102 1
+a102 1
+        android:layout_height="256dp"
+d106 5
+@
+
+
+1.11
+log
+@*** empty log message ***
+@
+text
+@d73 1
+a73 1
+            android:textSize="18sp"
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@d11 24
+d52 2
+a53 7
+            android:text="Post One Data" />
+        <Button
+            android:id="@@+id/btnDropTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="dropTable"
+            android:text="Drop Table" />
+a55 2
+
+
+d67 1
+a67 1
+            android:text="View DB" />
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d22 1
+a22 4
+            android:text="Get Job List"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+d28 7
+a34 2
+            android:text="Post One Data"
+            app:layout_constraintLeft_toLeftOf="parent" />
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d11 26
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d11 30
+d44 4
+a47 6
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="DB Data"
+        android:gravity="left"
+        android:textSize="24sp"
+        tools:text="DB Data" />
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d16 1
+a16 1
+        android:text="TextView"
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d12 1
+a12 1
+        android:id="@@+id/dbTitle"
+d17 1
+a17 1
+        android:textAlignment="center"
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@a10 73
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@@+id/seqNumTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data from FLA"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@@+id/seqNumVal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
+
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@@+id/btnStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="START" />
+
+        <Button
+            android:id="@@+id/btnPause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PAUSE" />
+
+        <Button
+            android:id="@@+id/btnStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STOP" />
+        <Button
+            android:id="@@+id/btnSeqNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FLA" />
+        </LinearLayout>
+
+
+    <TextView
+        android:id="@@+id/cdTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continuous Data"
+        android:textSize="24sp" />
+    <TextView
+        android:id="@@+id/cdVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp" />
+
+d12 1
+a12 1
+        android:id="@@+id/edTitle"
+d15 5
+a19 11
+        android:text="Event Data"
+        android:textSize="24sp" />
+    <TextView
+        android:id="@@+id/edVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp" />
+
+
+
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d11 59
+d96 2
+@
+
+
+1.2
+log
+@onContinuousData working
+@
+text
+@d25 13
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+d5 1
+d8 2
+a9 1
+    tools:context="com.example.jalfredo.oddccallback.MainActivity">
+d11 7
+d19 1
+d22 3
+a24 5
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+d26 1
+a26 1
+</android.support.constraint.ConstraintLayout>
+@

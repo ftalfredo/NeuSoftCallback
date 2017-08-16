@@ -1,0 +1,219 @@
+head	1.5;
+access;
+symbols;
+locks
+	jalfredo:1.5; strict;
+comment	@# @;
+
+
+1.5
+date	2017.08.12.00.52.19;	author jalfredo;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2017.08.11.02.20.25;	author jalfredo;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2017.08.11.00.07.54;	author jalfredo;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2017.08.10.16.27.57;	author jalfredo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2017.08.09.23.36.35;	author jalfredo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@package client.oddc.fla.com.restclient;
+
+/*
+  Created by yzharchuk on 8/2/2017.
+ */
+import android.os.AsyncTask;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import client.oddc.fla.com.model.ContinuousDataCollection;
+
+
+public class PostContinuousDataTask  extends AsyncTask<ContinuousDataCollection, Void, Void> {
+    private String url;
+
+    PostContinuousDataTask(String url) {
+        this.url = url;
+    }
+
+    @@Override
+    protected Void doInBackground(ContinuousDataCollection... dataCollection) {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            //HttpHeaders headers = new HttpHeaders();
+            restTemplate.postForObject(url, dataCollection[0], ContinuousDataCollection.class);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            return null;
+        }
+        return null;
+    }
+
+    protected void onPostExecute() {
+    }
+}@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d3 2
+a4 2
+/**
+ * Created by yzharchuk on 8/2/2017.
+a6 1
+import android.util.Base64;
+a7 6
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+a8 1
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+d11 1
+a11 1
+import client.oddc.fla.com.model.ContinuousData;
+d14 1
+a14 2
+public class PostContinuousDataTask  extends AsyncTask<ContinuousData, Void, Void>
+{
+d17 1
+a17 2
+    PostContinuousDataTask(String url)
+    {
+d22 1
+a22 2
+    protected Void doInBackground(ContinuousData... data)
+    {
+d24 1
+a24 3
+        ContinuousData myData = data[0];
+        try
+        {
+d26 3
+a28 5
+            HttpHeaders headers = new HttpHeaders();
+            restTemplate.postForObject(url, data, ContinuousData.class);
+        }
+        catch (Exception e)
+        {
+a31 3
+        finally
+        {
+        }
+d35 1
+a35 4
+    protected void onPostExecute()
+    {
+        int i = 5;
+        i = 4;
+d37 1
+a37 1
+}
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+package com.fujitsu.fla.oddc;
+d3 3
+d7 1
+d9 6
+d16 1
+d19 1
+a19 10
+import com.fujitsu.fla.oddc.ContinuousData;
+
+
+import android.util.Log;
+
+
+
+
+
+
+a33 1
+        Log.d("ALFREDO","PostContinuousDataTask.doInBackground");
+d35 1
+a35 1
+        //ContinuousData myData = data[0];
+d39 1
+a39 1
+            //HttpHeaders headers = new HttpHeaders();
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+package com.example.jalfredo.oddccallback;
+d8 1
+a8 1
+import com.example.jalfredo.oddccallback.ContinuousData;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a3 1
+import android.util.Base64;
+a4 6
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+a5 1
+//import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+d11 9
+d32 1
+d34 1
+a34 1
+        ContinuousData myData = data[0];
+d38 1
+a38 1
+            HttpHeaders headers = new HttpHeaders();
+@

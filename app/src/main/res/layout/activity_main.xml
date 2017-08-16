@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onStart"
+            android:text="START" />
+        <Button
+            android:id="@+id/btnDropTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onDropTable"
+            android:text="Drop Table" />
+        <Button
+            android:id="@+id/btnStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onStop"
+            android:text="STOP" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <Button
+            android:id="@+id/btnJobList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getJobList"
+            android:text="Get Job List" />
+        <Button
+            android:id="@+id/btnPostOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onCheckFS"
+            android:text="CHECK FS" />
+        <TextView
+            android:id="@+id/fsCount"
+            android:layout_width="168dp"
+            android:layout_height="match_parent"
+            android:textSize="24sp"
+            android:text=""
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/dbCountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DB COUNT" />
+
+        <TextView
+            android:id="@+id/dbCount"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:textSize="24sp"
+            android:text=""
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <Button
+            android:id="@+id/btnReadFS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onViewFS"
+            android:text="FileSpace"
+            android:visibility="visible" />
+        <Button
+            android:id="@+id/btnReadDB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onViewDB"
+            android:text="View DB"
+            android:visibility="visible" />
+        <Button
+            android:id="@+id/btnDELETE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onDelete"
+            android:text="DELETE"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/msgView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text=""
+        android:visibility="visible" />
+    <ListView
+        android:id="@+id/fslistView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.40" />
+
+    <ListView
+        android:id="@+id/dblistView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".60" />
+
+</LinearLayout>

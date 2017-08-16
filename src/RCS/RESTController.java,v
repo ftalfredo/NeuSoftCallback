@@ -1,0 +1,176 @@
+head	1.5;
+access;
+symbols;
+locks
+	jalfredo:1.5; strict;
+comment	@# @;
+
+
+1.5
+date	2017.08.12.00.52.19;	author jalfredo;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2017.08.11.02.20.25;	author jalfredo;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2017.08.11.00.07.54;	author jalfredo;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2017.08.10.16.27.57;	author jalfredo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2017.08.09.23.36.06;	author jalfredo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@package client.oddc.fla.com.restclient;
+
+import android.util.Log;
+
+import java.util.ArrayList;
+
+import client.oddc.fla.com.model.ContinuousDataCollection;
+import client.oddc.fla.com.model.ODDCJob;
+import client.oddc.fla.com.model.VideoCollection;
+/**
+ * Created by yzharchuk on 8/1/2017.
+ */
+
+public class RESTController
+{
+    private String base_url;
+
+    public RESTController( String baseUrl)
+    {
+        base_url = baseUrl;
+    }
+
+    public ArrayList<ODDCJob> getJobList()
+    {
+        ArrayList<ODDCJob> jobs = null;
+        try
+        {
+            jobs = new GetJobsRequestTask(base_url + "jobs/all").execute().get();
+        }
+        catch(Exception e)
+        {
+            Log.e("GET Jobs failed: ", e.getMessage());
+        }
+        return jobs;
+    }
+
+    public void postContinuousData(ContinuousDataCollection dataCollection)
+    {
+        new PostContinuousDataTask(base_url + "data/continuous").execute(dataCollection);
+    }
+
+    public void postMediaData(VideoCollection videos) {
+        new PostMediaDataTask(base_url + "data/video").execute(videos);
+    }
+}@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d3 1
+a3 1
+import client.oddc.fla.com.model.ContinuousData;
+d5 5
+d17 1
+d23 1
+a23 1
+    public void getJobList()
+d25 10
+a34 1
+        new GetJobsRequestTask(base_url + "jobs/all").execute();
+d37 1
+a37 1
+    public void postContinuousData(ContinuousData data)
+d39 5
+a43 2
+        String url = base_url +
+        new PostContinuousDataTask(base_url + "data/continuous").execute(data);
+d45 1
+a45 1
+}
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+package com.fujitsu.fla.oddc;
+d3 1
+a3 2
+import android.util.Log;
+import com.fujitsu.fla.oddc.ContinuousData;
+d5 3
+d17 1
+a17 2
+
+    /*public void getJobList()
+d20 1
+a20 1
+    }*/
+d22 1
+a22 1
+    public void postContinuousData(ContinuousData... data)
+d24 1
+a24 2
+        Log.d("ALFREDO","RESTController.postContinuousData");
+        //String url = base_url +
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+package com.example.jalfredo.oddccallback;
+d4 1
+a4 1
+import com.example.jalfredo.oddccallback.ContinuousData;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d3 1
+d21 1
+a21 1
+    public void postContinuousData(ContinuousData data)
+d23 2
+a24 1
+        String url = base_url +
+@

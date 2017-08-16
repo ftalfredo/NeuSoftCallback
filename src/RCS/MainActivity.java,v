@@ -1,0 +1,2700 @@
+head	1.32;
+access;
+symbols;
+locks
+	jalfredo:1.32; strict;
+comment	@# @;
+
+
+1.32
+date	2017.08.16.02.31.05;	author jalfredo;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2017.08.16.01.55.26;	author jalfredo;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2017.08.15.22.32.02;	author jalfredo;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2017.08.15.01.21.46;	author jalfredo;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2017.08.15.00.25.52;	author jalfredo;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2017.08.15.00.11.33;	author jalfredo;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2017.08.14.22.48.48;	author jalfredo;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2017.08.12.02.06.52;	author jalfredo;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2017.08.12.00.52.19;	author jalfredo;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2017.08.11.18.53.26;	author jalfredo;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2017.08.11.17.30.35;	author jalfredo;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2017.08.11.16.32.14;	author jalfredo;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2017.08.11.02.20.25;	author jalfredo;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2017.08.11.00.07.54;	author jalfredo;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2017.08.10.16.27.57;	author jalfredo;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2017.08.09.23.35.10;	author jalfredo;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2017.08.09.21.06.51;	author jalfredo;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2017.08.09.01.42.38;	author jalfredo;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2017.08.08.23.00.47;	author jalfredo;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2017.08.08.16.43.16;	author jalfredo;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2017.08.02.23.46.29;	author jalfredo;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2017.08.02.17.17.43;	author jalfredo;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2017.08.02.16.21.35;	author jalfredo;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2017.07.28.17.52.58;	author jalfredo;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2017.07.27.17.04.05;	author jalfredo;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2017.07.27.16.47.45;	author jalfredo;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2017.07.27.16.31.03;	author jalfredo;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2017.07.25.23.34.09;	author jalfredo;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2017.07.25.21.27.14;	author jalfredo;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2017.07.25.18.39.07;	author jalfredo;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2017.07.25.18.09.14;	author jalfredo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2017.07.25.16.52.56;	author jalfredo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.32
+log
+@put SendToFLA in thread
+@
+text
+@package client.oddc.fla.com.restclient;
+
+import android.icu.util.TimeZone;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+
+import android.os.Environment;
+import android.content.Context;
+
+import android.provider.BaseColumns;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.widget.SimpleCursorAdapter;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.database.DatabaseUtils;
+
+
+import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.ArrayList;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+
+import java.util.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
+import android.widget.TextView;
+
+import client.oddc.fla.com.model.ContinuousData;
+import client.oddc.fla.com.model.ContinuousDataCollection;
+import client.oddc.fla.com.model.ODDCJob;
+
+
+public class MainActivity extends AppCompatActivity {
+    public static Context mContext;
+    public static final String DATABASE_NAME = "oddc.db";
+
+    public static int frameRate = 30; // for NeuSoft set value somewhere for getFrameRate()
+    public static int getFrameRate(){return frameRate;}
+
+    public String currentFilename = "";  // TESTING ONLY
+    public File mVideoFolder; // for NeuSoft set value
+    public String baseUrl;
+
+    ODDCclass oddc;
+    boolean oddcOK = false;
+
+
+    final NeusoftSimulator nsc = new NeusoftSimulator(); // TESTING ONLY
+    boolean cTimerRunning = false; // TESTING ONLY
+    TextView msgView; // TESTING ONLY
+    TextView dbCount; // TESTING ONLY
+    TextView fsCount; // TESTING ONLY
+
+
+    @@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        baseUrl = getString(R.string.base_url);
+
+        dbCount = (TextView) findViewById(R.id.dbCount); // TESTING ONLY
+        msgView = (TextView) findViewById(R.id.msgView); // TESTing ONLY
+        fsCount = (TextView) findViewById(R.id.fsCount); // TESTing ONLY
+
+
+        oddc = new ODDCclass();
+        mContext = getApplicationContext();
+        nsc.setListener(oddc);
+        oddc.setListener(nsc);
+        createVideoFolder(); // for NeuSoft is this needed?
+        oddcOK = oddc.ok2Startup();
+    }
+
+
+    // TESTING ONLY
+    public void getJobList(View view){
+        RESTController controller = new RESTController(baseUrl);
+        ArrayList<ODDCJob> jlist = controller.getJobList();
+        if (jlist != null) {
+            msgView.setText("\nODDCJob sessionId="+jlist.get(0).getSessionId());
+        }
+    }
+
+    // TESTING ONLY
+    public void onCheckFS(View view) {
+        File[] vFiles = mVideoFolder.listFiles();
+        if (vFiles != null) {
+            fsCount.setText(String.valueOf(vFiles.length));
+        }
+    }
+
+
+
+    // TESTING ONLY
+    public void onViewFS(View view){
+        File[] vFiles = mVideoFolder.listFiles();
+        if (vFiles != null) {
+            ArrayList<String> vidFiles = new ArrayList<String>();
+            for (File f : vFiles) {
+                vidFiles.add(f.getPath());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.fslistview_layout, vidFiles);
+            ListView fsview = (ListView) findViewById(R.id.fslistView);
+            fsview.setAdapter(adapter);
+        }
+    }
+
+    // TESTING ONLY
+    public void onDelete(View view){
+        //MediaDeleted
+
+        //String sqlStmt = new String("update oddc set DataUploaded = 1 where rowid % "+SAMPLE_FREQ+" = 0 and DataUploaded = 0");
+        //db.execSQL(sqlStmt);
+    }
+
+
+    public void onStart(View view){cTimerRunning = true;oddcOK = true;}  // TESTING ONLY
+    public void onStop(View view){cTimerRunning = false;oddcOK = false;}  // TESTING ONLY
+    public void onDropTable(View view){oddc.dbh.dropTable();} // TESTING ONLY
+
+
+
+    // TESTING ONLY
+    public void onViewDB(View view){
+        SimpleCursorAdapter dataAdapter;
+
+        msgView.setText("");
+        String[] caFrom = {
+                DBschema._ID,
+                DBschema.GPS_TS,
+                DBschema.D_U,
+                DBschema.M_D,
+                DBschema.M_URI
+        };
+        int[] caTo = new int[]{
+                R.id.rowVal,
+                R.id.gpsTSval,
+                R.id.duVal,
+                R.id.mdVal,
+                R.id.mediaURI
+        };
+        String omsg = oddc == null ? "oddc=NULL" : "oddc=NOT NULL";
+        Log.d("ALFREDO","onViewDB "+omsg);
+        if (oddc.db != null){
+            String dmsg = oddc.db == null ? "oddc.db=NULL" : "oddc.db=NOT NULL";
+            Log.d("ALFREDO","onViewDB oddc="+omsg+" "+dmsg);
+            Cursor cursor = oddc.db.query(
+                    DBschema.TABLE_NAME,
+                    caFrom,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
+            dataAdapter = new SimpleCursorAdapter(
+                    this, R.layout.dblistview_layout,
+                    cursor,
+                    caFrom,
+                    caTo,
+                    0);
+            ListView listview = (ListView) findViewById(R.id.dblistView);
+            listview.setAdapter(dataAdapter);
+            //cursor.close();
+        }
+    }
+
+
+
+
+
+
+    // NeuSoft callbacks which ODDC invokes to send data to NeuSoft
+    public interface NeuSoftInterface {
+        public void onFLAparam(int param); // TBD
+    }
+
+    // If NeuSoft creates folder, please set mVideoFolder to location
+    private void createVideoFolder() {
+        mVideoFolder = mContext.getDir("FLA", Context.MODE_PRIVATE); //Creating an internal dir;
+    }
+
+
+    // TESTING, however this class implements NeuSoftInterface
+    // Some NeuSoft class would implement NeuSoftInterface as does this class,
+    // in order to call oddcOK = listener.onContinuousData(data);
+    public class NeusoftSimulator extends Thread implements NeuSoftInterface {
+        private ODDCclass listener;
+
+
+
+        Timer ctimer; // TESTING ONLY
+        Timer vtimer; // TESTING ONLY
+
+
+        public void setListener(ODDCclass listener){
+        this.listener = listener;
+    }  // for NeuSoft
+
+        public void onFLAparam(int param){} // for NeuSoft, example only at this time, param(s) TBD
+
+        public NeusoftSimulator() {
+
+            int fRate = 1000 / getFrameRate(); // TESTING ONLY
+            int vRate = 60 * 1000; // TESTING ONLY
+            ctimer = new Timer();
+            ctimer.scheduleAtFixedRate(new TimerTask(){
+                public void run(){
+                    //Log.d("ALFREDO","NeusoftSimulator.ctimer");
+                    if (cTimerRunning) {
+                        oddcOK = listener.onContinuousData(mkContinuousData()); // for NeuSoft to send ContinuousData to ODDC
+                    }
+                }
+            }, 1000, fRate);
+
+            vtimer = new Timer(); // for testing only
+            vtimer.scheduleAtFixedRate(new TimerTask(){ /* for testing only */
+                public void run(){
+                    boolean ok;
+                    //Log.d("ALFREDO","NeusoftSimulator.vtimer oddcOK="+oddcOK);
+                    if (! cTimerRunning) return;
+                    if (! oddcOK) return; // fileSysCheck not OK
+                    try {
+                        currentFilename = mkFileName();
+                        String fname = mVideoFolder.getPath() + File.separator + currentFilename;
+
+                        File f = new File(fname);
+                        try {
+                            ok = f.createNewFile();
+                            //Log.d("ALFREDO","NeusoftSimulator.vtimer "+ok+" fname="+fname);
+                        }
+                        catch(IOException ioe){Log.d("ALFREDO","NeusoftSimulator.vtimer IOException");}
+                    }
+                    catch (NullPointerException npe){Log.d("ALFREDO","NeusoftSimulator.vtimer NullPointerException");}
+                }
+            }, 1000,1000);    /*vRate, vRate);*/
+        }
+
+
+    // TESTING ONLY
+    public ContinuousData mkContinuousData()
+    {
+        Timestamp dateTime = new Timestamp(new Date().getTime());
+
+        // NeuSoft prepares data for transfer somewhere in their code
+        ContinuousData cd = new ContinuousData();
+
+        //Create dummy data
+        cd.vehicleID = "2JOHN41JXMN109186"; // VIN
+        //cd.timezone = 0;
+
+        cd.gpsTimestamp = dateTime; // from OS not GPS
+        cd.longitude = getRandomFloat();
+        cd.latitude = getRandomFloat();
+        cd.speed = getRandomFloat();
+        cd.speedDetectionType = 0;
+
+        cd.accelerationTimeStamp = dateTime; /* yyyy-MM-dd HH:mm:ss.SSS for SQLite */
+        cd.accelerationX = getRandomFloat();
+        cd.accelerationY = getRandomFloat();
+        cd.accelerationZ = getRandomFloat();
+
+        cd.gShockTimeStamp = dateTime;
+        cd.gShockEvent = false;
+        //cd.gShockEventThreshold = getRandomFloat(); /* might be a parameter from FLA */
+
+        cd.fcwTimeStamp = dateTime;
+        cd.fcwExistFV = getRandomBoolean();
+        //cd.fcwTimeToCollision = 0;
+        cd.fcwDistanceToFV = getRandomFloat();
+
+        cd.fcwEvent = getRandomBoolean();
+        cd.fcwEventThreshold = getRandomFloat();
+
+        cd.ldwTimeStamp = dateTime;
+        cd.ldwDistanceToLeftLane = getRandomFloat();
+        cd.ldwDistanceToRightLane = getRandomFloat();
+        cd.ldwEvent = getRandomBoolean();
+        cd.mediaURI = getCurrentFilename();
+
+        return cd;
+    }
+
+    // TESTING ONLY
+    private float getRandomFloat()
+    {
+        float randomNumber = 0 + (float)(Math.random() * 100);
+        return randomNumber;
+    }
+
+    // TESTING ONLY
+    private Boolean getRandomBoolean() {
+        int randomNumber = 0 + (int) (Math.random() * 100);
+        if (randomNumber < 65) {
+            return true;
+        }
+        return false;
+    }
+
+    // TESTING ONLY
+    public String getCurrentFilename()
+    {
+        return currentFilename;
+    }
+
+    // TESTING ONLY
+    private String mkFileName(){
+            SimpleDateFormat dateFormat = new SimpleDateFormat( "yyMMdd_HHmmss" );
+            Date date = new Date();
+            return dateFormat.format(date)+".mp4";
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // ODDC below here
+
+
+
+    // ODDC callbacks which NeuSoft invokes to send data to ODDC
+    public interface ODDCinterface {
+        public boolean onContinuousData(ContinuousData data);
+        public List<String> getContinuousLog();
+        public List<String> getEventLog();
+        public List<String> getOnDemandLog();
+        public boolean ok2Startup();
+        public boolean reqShutdown();
+    }
+
+    // Fujitsu supplied class containing callback functions to receive data from NeuSoft
+    public class ODDCclass extends Thread implements ODDCinterface {
+        //File dataDir;
+        RESTController controller;
+
+        Timestamp t0,t1;
+
+		int MIN_AVAIL_FS = 1024 * 1024 * 1024;
+		int SAMPLE_FREQ = 60; // ALFREDO parameter from SLA?
+        int FRAMES_PER_MIN;
+		int SENDCOUNT;
+
+
+        public ODDCdbHelper dbh;
+        public SQLiteDatabase db = null;
+        TimeZone tz;
+
+        private NeusoftSimulator listener;
+        private int loopCount = 0;
+
+        public ODDCclass(){
+            FRAMES_PER_MIN = getFrameRate() * 60;
+            SENDCOUNT = getFrameRate() * 60 / SAMPLE_FREQ;
+            t0 = null;
+            t1 = null;
+        }
+
+        // for NeuSoft, need to know name of NeuSoft listener class
+        public void setListener(NeusoftSimulator listener){
+            this.listener = listener;
+        }
+
+
+        // return value of false indicates some condition exists which should prevent startup
+        // otherwise true indicate OK to startup
+        public boolean ok2Startup(){
+
+            controller = new RESTController(baseUrl);
+
+            tz = TimeZone.getDefault();
+            boolean isDST = tz.observesDaylightTime();
+            int dstMillisec = tz.getDSTSavings();
+            int ros = tz.getRawOffset();
+
+            // code above is for testing, code below is for production
+			dbh = new ODDCdbHelper(mContext);
+            db = dbh.getWritableDatabase();
+Log.d("ALFREDO","ODDCclass.ok2Startup db = dbh.getWritableDatabase");
+
+
+            long fsStat = checkFileSpace();
+            return fsStat == -1 ? false : true;
+        }
+
+        // NeuSoft waits for boolean return value from reqShutdown before shutdown
+        public boolean reqShutdown(){return true;} // FIXME TBD
+
+
+        // TESTING ONLY
+        public int getRowCount(){
+            long cnt  = DatabaseUtils.queryNumEntries(db, DBschema.TABLE_NAME);
+            return (int)cnt;
+        }
+
+		
+		private class ODDCdbHelper extends SQLiteOpenHelper {
+	        // If you change the database schema, you must increment the database version.
+	        public static final int DATABASE_VERSION = 3;
+	
+	
+	        public ODDCdbHelper(Context context) {
+	            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	            Log.d("ALFREDO","ODDCdbHelper.ODDCdbHelper");
+	        }
+	        public void onCreate(SQLiteDatabase db) {
+                db.execSQL(SQL_DROP_TABLE);
+	            db.execSQL(SQL_CREATE_TABLE);
+	            Log.d("ALFREDO","ODDCdbHelper.onCreate SQL_CREATE_TABLE="+SQL_CREATE_TABLE);
+	        }
+	        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+	            db.execSQL(SQL_DROP_TABLE);
+	            onCreate(db);
+	        }
+	        public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+	            onUpgrade(db, oldVersion, newVersion);
+	        }
+	        public void dropTable(){
+                db.execSQL(SQL_DROP_TABLE);
+                onCreate(db);
+            }
+	    }
+
+        public List<String> getContinuousLog(){return Arrays.asList("TBD");}
+        public List<String> getEventLog(){return Arrays.asList("TBD");}
+        public List<String> getOnDemandLog(){return Arrays.asList("TBD");}
+
+
+        public boolean onContinuousData(final ContinuousData data){
+            // Fujitsu processing of continuous data received from NeuSoft
+            long fmRate = 0;
+            long t0ms = 0;
+            long t1ms = 0;
+
+            if (t0 == null){
+                t0 = data.fcwTimeStamp;
+                t1 = t0;
+            }
+            else {
+                t0 = t1;
+                t1 = data.fcwTimeStamp;
+                t0ms = t0.getTime();
+                t1ms = t1.getTime();
+                frameRate = (int)(1000 / ( t1ms - t0ms));
+                FRAMES_PER_MIN = frameRate * 60;
+                SENDCOUNT = frameRate * 60 / SAMPLE_FREQ;
+            }
+
+Log.d("ALFREDO","onContinuousData() "+String.valueOf(FRAMES_PER_MIN)+" "+String.valueOf(loopCount)+" fmRate="+String.valueOf(frameRate)+" t0="+String.valueOf(t0ms)+" t1="+String.valueOf(t1ms));
+            insertSQLite(data);
+
+            if (loopCount > FRAMES_PER_MIN){
+                SendToFLA fla = new SendToFLA();
+                fla.start();
+                //sendToFLA();
+                loopCount = 0;
+            }
+            else loopCount++;
+
+            long fsStat = checkFileSpace();
+
+            return fsStat == -1 ? false : true;
+        }
+
+
+    	private static final String SQL_CREATE_TABLE =
+            "CREATE TABLE IF NOT EXISTS " + DBschema.TABLE_NAME + " (" +
+                    DBschema._ID      + " INTEGER PRIMARY KEY," +
+                    DBschema.VIN      + " CHAR(18)," +
+
+                    DBschema.GPS_TS   + " TIMESTAMP," +
+                    DBschema.GPS_LON  + " FLOAT(10,6)," +
+                    DBschema.GPS_LAT  + " FLOAT(10,6)," +
+
+                    DBschema.SPEED    + " FLOAT(5,2)," +
+                    DBschema.SPEED_DT + " INT," +
+
+                    DBschema.ACC_TS   + " TIMESTAMP," +
+                    DBschema.ACC_X    + " FLOAT(10,6)," +
+                    DBschema.ACC_Y    + " FLOAT(10,6)," +
+                    DBschema.ACC_Z    + " FLOAT(10,6)," +
+
+                    DBschema.GS_TS    + " TIMESTAMP," +
+                    DBschema.GS_E     + " BOOLEAN," +
+                    DBschema.GS_ET    + " FLOAT(10,6)," +
+
+                    DBschema.FCW_TS   + " TIMESTAMP," +
+                    DBschema.FCW_EFV  + " BOOLEAN," +
+                    DBschema.FCW_CI   + " BOOLEAN," +
+                    DBschema.FCW_TTC  + " INT," +
+                    DBschema.FCW_DFV  + " FLOAT(5,2)," +
+                    //DBschema.FCW_RSFV + " FLOAT(5,2)," +
+                    DBschema.FCW_E    + " BOOLEAN," +
+                    DBschema.FCW_ET   + " FLOAT(5,2)," +
+
+                    DBschema.LDW_TS   + " TIMESTAMP," +
+                    DBschema.LDW_DLL  + " FLOAT(5,2)," +
+                    DBschema.LDW_DRL  + " FLOAT(5,2)," +
+                    DBschema.LDW_E    + " BOOLEAN," +
+
+                    DBschema.M_URI    + " VARCHAR(32)," +
+                    DBschema.M_U      + " BOOLEAN," +
+                    DBschema.M_D      + " BOOLEAN," +
+                    DBschema.D_U      + " BOOLEAN )";
+
+		private static final String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + DBschema.TABLE_NAME;
+
+
+        public boolean insertSQLite(ContinuousData data){
+            ContentValues values = new ContentValues();
+            values.put(DBschema.VIN, data.vehicleID);
+            //values.put(DBschema.TZ, tz.getRawOffset()); /* milliseconds */
+
+            values.put(DBschema.GPS_TS, getTimestamp());
+            values.put(DBschema.GPS_LON, data.longitude);
+            values.put(DBschema.GPS_LAT, data.latitude);
+
+            values.put(DBschema.SPEED, data.speed);
+            values.put(DBschema.SPEED_DT, data.speedDetectionType);
+
+            values.put(DBschema.ACC_TS, getTimestamp());
+            values.put(DBschema.ACC_X, data.accelerationX);
+            values.put(DBschema.ACC_Y, data.accelerationY);
+            values.put(DBschema.ACC_Z, data.accelerationZ);
+
+            values.put(DBschema.GS_TS, getTimestamp());
+            values.put(DBschema.GS_E, data.gShockEvent);
+            //values.put(DBschema.GS_ET, data.gShockEventThreshold);
+
+            values.put(DBschema.FCW_TS, getTimestamp());
+            values.put(DBschema.FCW_EFV, data.fcwExistFV);
+            values.put(DBschema.FCW_CI, data.fcwCutIn);
+            //values.put(DBschema.FCW_TTC, data.fcwTimeToCollision);
+            values.put(DBschema.FCW_DFV, data.fcwDistanceToFV);
+            //values.put(DBschema.FCW_RSFV, data.fcwRelativeSpeedToFV);
+            values.put(DBschema.FCW_E, data.fcwEvent);
+            values.put(DBschema.FCW_ET, data.fcwEventThreshold);
+
+            values.put(DBschema.LDW_TS, getTimestamp());
+            values.put(DBschema.LDW_DLL, data.ldwDistanceToLeftLane);
+            values.put(DBschema.LDW_DRL, data.ldwDistanceToRightLane);
+            values.put(DBschema.LDW_E, data.ldwEvent);
+
+            values.put(DBschema.M_URI, data.mediaURI);
+            values.put(DBschema.M_D, false);
+            values.put(DBschema.M_U, false);
+            values.put(DBschema.D_U, false);
+
+            long rid = db.insert(DBschema.TABLE_NAME, null, values);
+
+            // TESTING, take out for PRODUCTION
+            dbCount.post(new Runnable() {
+                public void run() {
+                    final int cnt = getRowCount();
+                    //Log.d("ALFREDO","MainActivity.insertSQLite "+String.valueOf(cnt));
+                    String dbt = "DB rowCount="+String.valueOf(cnt);
+                    dbCount.setText(dbt);
+                }
+            });
+
+            return  true;
+        }
+
+
+        // YYMMDD_HHMMSS.mp4
+        public long checkFileSpace(){
+            long availSpace = mVideoFolder.getUsableSpace();
+
+            //Log.d("ALFREDO","checkFileSpace MIN_AVAIL_FS="+String.valueOf(MIN_AVAIL_FS)+" availSpace="+String.valueOf(availSpace));
+
+            if (availSpace > MIN_AVAIL_FS) return availSpace;
+            else                           return -1; // delete some files
+        }
+
+
+        public void sendToFLAAAA(){
+
+            //String[] columns = new String[]{"vehicleID","gpsTimestamp","longitude","latitude"};
+            String[] columns = new String[]{"vehicleID","longitude","latitude"};
+            String selection = new String("rowid in ( select rowid from oddc where rowid % ? = 0 and DataUploaded = 0 limit ? )");
+            String[] selectionArgs = new String[]{String.valueOf(SAMPLE_FREQ),String.valueOf(SENDCOUNT)};
+
+            Cursor c = db.query (DBschema.TABLE_NAME,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null,
+                null);
+
+            int nrows = c.getCount();
+            if (nrows > 0)
+            {
+                int i = 0;
+                ArrayList<ContinuousData> dataCollection = new ArrayList<ContinuousData>();
+                while (c.moveToNext()){
+                    ContinuousData cd = new ContinuousData();
+                    cd.vehicleID = c.getString(0);
+                    cd.longitude = c.getFloat(1);
+                    cd.latitude = c.getFloat(2);
+                    dataCollection.add(cd);
+                }
+                c.close();
+
+                ContinuousDataCollection wrapper = new ContinuousDataCollection();
+                wrapper.setContinuousData(dataCollection);
+                controller.postContinuousData(wrapper);
+            }
+
+            String sqlStmt = "update oddc set DataUploaded = 1 where rowid in ( select rowid from oddc where rowid % "+String.valueOf(SAMPLE_FREQ)+" = 0 and DataUploaded = 0 limit "+String.valueOf(SENDCOUNT)+" )";
+            db.execSQL(sqlStmt);
+
+            Log.d("ALFREDO","SendToFLA Cursor.nrows="+nrows);
+		}
+    }
+
+    public class SendToFLA extends Thread {
+        public SendToFLA(){super ("SendToFLA");}
+        public void run(){
+            String[] columns = new String[]{"vehicleID","longitude","latitude"};
+            String selection = new String("rowid in ( select rowid from oddc where rowid % ? = 0 and DataUploaded = 0 limit ? )");
+            String[] selectionArgs = new String[]{String.valueOf(oddc.SAMPLE_FREQ),String.valueOf(oddc.SENDCOUNT)};
+
+            Cursor c = oddc.db.query (DBschema.TABLE_NAME,
+                    columns,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    null,
+                    null);
+
+            int nrows = c.getCount();
+            if (nrows > 0)
+            {
+                int i = 0;
+                ArrayList<ContinuousData> dataCollection = new ArrayList<ContinuousData>();
+                while (c.moveToNext()){
+                    ContinuousData cd = new ContinuousData();
+                    cd.vehicleID = c.getString(0);
+                    cd.longitude = c.getFloat(1);
+                    cd.latitude = c.getFloat(2);
+                    dataCollection.add(cd);
+                }
+                c.close();
+
+                ContinuousDataCollection wrapper = new ContinuousDataCollection();
+                wrapper.setContinuousData(dataCollection);
+                oddc.controller.postContinuousData(wrapper);
+            }
+
+            String sqlStmt = "update oddc set DataUploaded = 1 where rowid in ( select rowid from oddc where rowid % "+String.valueOf(oddc.SAMPLE_FREQ)+" = 0 and DataUploaded = 0 limit "+String.valueOf(oddc.SENDCOUNT)+" )";
+            oddc.db.execSQL(sqlStmt);
+
+            Log.d("ALFREDO","SendToFLA Cursor.nrows="+nrows);
+        }
+    }
+
+    public class DBschema implements BaseColumns {
+        public static final String TABLE_NAME = "oddc";
+        public static final String VIN = "VehicleID";
+        public static final String TZ = "TimeZone";
+
+        public static final String GPS_TS = "GPStimeStamp";
+        public static final String GPS_LON = "longitude";
+        public static final String GPS_LAT = "latitude";
+
+        public static final String SPEED = "Speed";
+        public static final String SPEED_DT = "SpeedDetectionType";
+
+        public static final String ACC_TS = "AccelerationTimeStamp";
+        public static final String ACC_X = "AccelerationX";
+        public static final String ACC_Y = "AccelerationY";
+        public static final String ACC_Z = "AccelerationZ";
+
+        public static final String GS_TS = "GShockTimeStamp";
+        public static final String GS_E = "GShockEvent";
+        public static final String GS_ET = "GShockEventThreshold";
+
+        public static final String FCW_TS = "FCWTimeStamp";
+        public static final String FCW_EFV = "FCWExistFV";
+        public static final String FCW_CI = "FCWCutIn";
+        public static final String FCW_TTC = "FCWTimeToCollision";
+        public static final String FCW_DFV = "FCWDistanceToFV";
+        //public static final String FCW_RSFV = "FCWRelativeSpeedToFV";
+        public static final String FCW_E = "FCWEvent";
+        public static final String FCW_ET = "FCWTEventThreshold";
+
+        public static final String LDW_TS = "LDWTimeStamp";
+        public static final String LDW_DLL = "LDWDistanceToLeftLane";
+        public static final String LDW_DRL = "LDWDistanceToRightLane";
+        public static final String LDW_E = "LDWEvent";
+
+        public static final String M_URI = "MediaURI";
+        public static final String M_D = "MediaDeleted";
+        public static final String M_U = "MediaUploaded";
+        public static final String D_U = "DataUploaded";
+    }
+
+
+
+
+    private static String getTimestamp(){
+        //SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss.SSS" );
+        //SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-mm-dd hh:mm:ss.fffffffff" );
+        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+        Date date = new Date();
+
+        return dateFormat.format(date);
+    }
+}
+@
+
+
+1.31
+log
+@*** empty log message ***
+@
+text
+@d242 1
+a242 1
+                            Log.d("ALFREDO","NeusoftSimulator.vtimer "+ok+" fname="+fname);
+d360 1
+a360 1
+		int SAMPLE_FREQ = 10; // ALFREDO parameter from SLA?
+d472 4
+a475 2
+            if (loopCount == FRAMES_PER_MIN){
+                sendToFLA();
+d575 1
+a575 1
+                    Log.d("ALFREDO","MainActivity.insertSQLite "+String.valueOf(cnt));
+d589 1
+a589 1
+            Log.d("ALFREDO","checkFileSpace MIN_AVAIL_FS="+String.valueOf(MIN_AVAIL_FS)+" availSpace="+String.valueOf(availSpace));
+d596 1
+a596 1
+        public void sendToFLA(){
+d634 1
+a634 1
+            Log.d("ALFREDO","sendToFLA nrows="+nrows);
+d636 42
+@
+
+
+1.30
+log
+@*** empty log message ***
+@
+text
+@d49 1
+a49 1
+    public static int frameRate = 1; // for NeuSoft set value somewhere for getFrameRate()
+a103 8
+        /* was postOne
+        RESTController controller = new RESTController(baseUrl);
+        ContinuousData data = createDummyContinuousData();
+        ArrayList<ContinuousData> dataCollection = new ArrayList<ContinuousData>();
+        dataCollection.add(data);
+        ContinuousDataCollection wrapper = new ContinuousDataCollection();
+        wrapper.setContinuousData(dataCollection);
+        controller.postContinuousData(wrapper); */
+d133 1
+a133 37
+    // TESTING ONLY
+    private ContinuousData createDummyContinuousData()
+    {
+        ContinuousData data = new ContinuousData();
+        data.messageID = 24;
+        data.sessionID = "qwerq52342";
+        data.vehicleID = " VINREITWOIASDFN";
+        data.driverID = "B4979695";
+        data.submitterID = "Fujitsu Labs";
+
+        data.gpsTimestamp = new Timestamp(new Date().getTime());
+        data.longitude = 0.2341346;
+        data.latitude = 22.340953;
+        data.speed = 80.9;
+        data.speedDetectionType = 4;
+
+        data.accelerationTimeStamp = new Timestamp(new Date().getTime());
+        data.accelerationX = 45;
+        data.accelerationY = 3;
+        data.accelerationZ = 74;
+
+        data.gShockTimeStamp = new Timestamp(new Date().getTime());
+        data.gShockEvent = true;
+        data.fcwTimeStamp = new Timestamp(new Date().getTime());
+        data.fcwExistFV = true;
+        data.fcwCutIn = true;
+        data.fcwDistanceToFV = 3.3;
+        data.fcwRelativeSpeedToFV = 4.4;
+        data.fcwEvent = true;
+        data.fcwEventThreshold = 59;
+
+        data.ldwTimeStamp = new Timestamp(new Date().getTime());
+        data.ldwDistanceToLeftLane = 5.5;
+        data.ldwDistanceToRightLane = 2.2;
+        data.ldwEvent = true;
+        return data;
+    }
+d201 3
+d208 1
+a208 1
+    public void setListener(ODDCclass listener){
+d215 1
+d221 1
+a221 1
+                    Log.d("ALFREDO","NeusoftSimulator.ctimer");
+d232 1
+a232 1
+                    Log.d("ALFREDO","NeusoftSimulator.vtimer oddcOK="+oddcOK);
+d327 15
+d357 2
+d361 2
+a362 2
+        int FRAMES_PER_MIN = getFrameRate() * 60;
+		int SENDCOUNT = getFrameRate() * 60 / SAMPLE_FREQ;
+d372 6
+a377 1
+        public ODDCclass(){}
+d401 1
+d409 2
+d451 19
+a469 1
+Log.d("ALFREDO","onContinuousData() "+String.valueOf(FRAMES_PER_MIN)+" "+String.valueOf(loopCount));
+d507 1
+d550 1
+d594 1
+a594 1
+        public void sendToFLA(){ /* code supplied by Yuri */
+d659 1
+@
+
+
+1.29
+log
+@*** empty log message ***
+@
+text
+@d49 1
+a49 1
+    public static int frameRate = 1; // NeuSoft set value somewhere for getFrameRate()
+d53 1
+a53 1
+    public File mVideoFolder; // NeuSoft set value
+d82 1
+a82 1
+        createVideoFolder(); // NeuSoft is this needed?
+a185 1
+                DBschema.VIN,
+a190 1
+
+a192 1
+                R.id.vinVal,
+a197 1
+
+a223 5
+    public void dispDBcountNOT(){
+        int cnt = oddc.getRowCount();
+        Log.d("ALFREDO","MainActivity.onViewDB "+String.valueOf(cnt));
+        dbCount.setText("DB rowCount="+String.valueOf(cnt));
+    }
+d251 1
+a251 1
+    }  // NeuSoft
+d253 1
+a253 1
+        public void onFLAparam(int param){} // example only at this time, param(s) TBD
+d263 1
+a263 1
+                        oddcOK = listener.onContinuousData(mkContinuousData()); // invoke callback to send to ODDC
+d384 3
+a386 2
+		//int SENDCOUNT = getFrameRate() * 60 / SAMPLE_FREQ;
+        int SENDCOUNT = 5; // TESTING ONLY, use formula above
+d397 1
+d466 1
+a466 1
+Log.d("ALFREDO","onContinuousData()");
+d469 1
+a469 1
+            if (loopCount == SENDCOUNT){
+d516 1
+a517 1
+                    DBschema.M_U      + " BOOLEAN," +
+a522 3
+
+
+
+d564 1
+d590 1
+a590 1
+        Log.d("ALFREDO","sendToFLA");
+d593 2
+a594 2
+            String selection = new String("rowid % ? = 0 and DataUploaded = 0");
+            String[] selectionArgs = new String[]{String.valueOf(SAMPLE_FREQ)};
+d603 1
+a603 1
+                String.valueOf(SENDCOUNT));
+a608 1
+                //ContinuousData[] cd = new ContinuousData[nrows];
+a611 1
+                    //cd[i] = new ContinuousData();
+a612 2
+                    //cd[i].timezone = c.getInt(2);
+                    //cd[i].gpsTimestamp = Timestamp.valueOf(c.getString(2));
+d624 1
+a624 2
+            //String sqlStmt = new String("update oddc set DataUploaded = 1 where rowid % "+SAMPLE_FREQ+" = 0 and DataUploaded = 0 limit "+SENDCOUNT);
+            String sqlStmt = new String("update oddc set DataUploaded = 1 where rowid % "+SAMPLE_FREQ+" = 0 and DataUploaded = 0");
+d626 2
+@
+
+
+1.28
+log
+@*** empty log message ***
+@
+text
+@d128 9
+d188 3
+a190 2
+                DBschema.GPS_LON,
+                DBschema.GPS_LAT
+d197 3
+a199 2
+                R.id.gpsLONval,
+                R.id.gpsLATval
+@
+
+
+1.27
+log
+@*** empty log message ***
+@
+text
+@d57 1
+a57 1
+    boolean oddcOK = true;
+d128 2
+a129 2
+    public void onStart(View view){cTimerRunning = true;}  // TESTING ONLY
+    public void onStop(View view){cTimerRunning = false;}  // TESTING ONLY
+d249 1
+a249 1
+    }
+d271 2
+a272 1
+                    //if (! oddcOK) return; // fileSysCheck not OK
+@
+
+
+1.26
+log
+@*** empty log message ***
+@
+text
+@d13 2
+a15 2
+import android.database.sqlite.SQLiteDatabase;
+import android.database.DatabaseUtils;
+a17 3
+import android.os.Environment;
+import android.content.Context;
+
+a19 1
+
+d22 2
+a25 1
+
+a27 1
+
+a28 2
+
+
+d33 1
+a33 1
+import java.text.SimpleDateFormat;
+d36 1
+a36 2
+
+
+d49 1
+a49 2
+    public static int frameRate = 1;
+
+d52 2
+a53 4
+    public String currentFilename = "";
+    public File mVideoFolder;
+
+    //private final String baseUrl = "http://192.168.168.77:8080//";
+a55 1
+
+d57 1
+a57 1
+    final NeusoftSimulator nsc = new NeusoftSimulator();
+d60 5
+a64 5
+    boolean oddcOK = true;
+    boolean cTimerRunning = false;
+
+    TextView msgView;
+    TextView dbCount;
+a70 1
+
+d73 3
+a75 1
+        createVideoFolder();
+a76 2
+        dbCount = (TextView) findViewById(R.id.dbCount);
+        msgView = (TextView) findViewById(R.id.msgView);
+a78 2
+
+
+a79 2
+
+
+d82 1
+a82 1
+
+d86 2
+a90 1
+
+d95 10
+a104 1
+    public void postOneData(View view){
+a105 1
+
+d111 2
+a112 2
+        controller.postContinuousData(wrapper);
+    }
+d114 1
+d128 3
+d132 1
+a132 7
+
+    public void onStart(View view){cTimerRunning = true;}
+    public void onStop(View view){cTimerRunning = false;}
+
+    //public void onDropTable(View view){oddc.dbh.dropTable();}
+
+
+d170 1
+a192 1
+
+a212 1
+
+d217 1
+a217 1
+    public void dispDBcount(){
+d232 1
+d234 1
+a234 5
+        File publicMovieDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+        mVideoFolder = new File(publicMovieDirectory, "FLA");
+        if(!mVideoFolder.exists()) {
+            mVideoFolder.mkdirs();
+        }
+d237 4
+a240 2
+// NeuSoft class to which Fujitsu callback interface is attached
+// NeuSoft delivers data to Fujitsu by invoking listener.onContinuousData()
+d243 2
+a244 2
+        Timer ctimer;
+        Timer vtimer;
+d254 4
+a257 5
+            int fRate = 1000 / frameRate;
+            int vRate = 60 * 1000;
+
+            ctimer = new Timer(); // for testing only
+            ctimer.scheduleAtFixedRate(new TimerTask(){ /* for testing only */
+d289 1
+a291 3
+        //Only send data when the system is recording
+        //if(!isRecording) {return;}
+
+d333 1
+d340 1
+d348 2
+d355 1
+a355 1
+
+d376 1
+a376 1
+        File dataDir;
+d380 3
+a382 4
+		int SAMPLE_FREQ = 10;
+		//int SENDCOUNT = frameRate * 60 * 60 / SAMPLE_FREQ;
+        int SENDCOUNT = 5;
+
+a390 1
+
+a392 2
+
+
+a400 5
+            //TextView msgView = (TextView) findViewById(R.id.msgView);
+
+            dataDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+
+
+a403 2
+
+
+d407 1
+a407 2
+
+            //int ros = tz.getRawOffset();
+d419 1
+a419 1
+        public boolean reqShutdown(){return true;}
+a576 2
+
+            //long availSpace = Environment.getDataDirectory().getUsableSpace();
+@
+
+
+1.25
+log
+@*** empty log message ***
+@
+text
+@d63 3
+a65 1
+    private final String baseUrl = "http://192.168.168.77:8080//";
+d83 2
+d184 1
+d188 1
+a188 2
+                DBschema.GPS_LAT,
+                DBschema._ID
+d192 1
+@
+
+
+1.24
+log
+@*** empty log message ***
+@
+text
+@d9 1
+d101 1
+d103 1
+a103 3
+            for (int i = 0; i < jlist.size(); i++){
+                msgView.append("\nODDCJob sessionId="+jlist.get(i).getSessionId());
+            }
+d119 2
+a120 3
+        if (vFiles == null) msgView.append("\nDataDirectry 0 files");
+        else {
+            msgView.append("\nDataDirectry "+vFiles.length+" files");
+d122 1
+a122 3
+                if (f.isFile()) {
+                    msgView.append("\n" + f.getPath());
+                }
+d124 3
+@
+
+
+1.23
+log
+@update before Yuri pull
+@
+text
+@d9 2
+d21 2
+d31 1
+d47 3
+d62 1
+a62 1
+    private final String baseUrl = "http://192.168.168.68:8080//";
+d72 1
+a72 1
+    TextView valDB;
+d82 1
+a82 1
+        valDB = (TextView) findViewById(R.id.valDB);
+d85 1
+a85 1
+        ODDCclass oddc = new ODDCclass();
+d99 6
+a104 1
+        controller.getJobList();
+d107 2
+d110 5
+a114 2
+        RESTController controller = new RESTController(baseUrl);
+        controller.postContinuousData(data);
+d130 2
+d176 44
+a219 1
+        dispDB();
+d221 2
+a222 1
+    public void dispDB(){
+d225 1
+a225 1
+        valDB.setText("DB rowCount="+String.valueOf(cnt));
+d230 1
+a230 9
+    // ODDC callbacks which NeuSoft invokes to send data to ODDC
+    public interface ODDCinterface {
+        public boolean onContinuousData(ContinuousData data);
+        public List<String> getContinuousLog();
+        public List<String> getEventLog();
+        public List<String> getOnDemandLog();
+        public boolean ok2Startup();
+        public boolean reqShutdown();
+    }
+d369 10
+d391 1
+a391 1
+        private SQLiteDatabase db = null;
+a396 1
+        //TextView valDB;
+d429 1
+a429 1
+
+d535 1
+a535 39
+        public class DBschema implements BaseColumns {
+            public static final String TABLE_NAME = "oddc";
+            public static final String VIN = "VehicleID";
+            public static final String TZ = "TimeZone";
+
+            public static final String GPS_TS = "GPStimeStamp";
+            public static final String GPS_LON = "longitude";
+            public static final String GPS_LAT = "latitude";
+
+            public static final String SPEED = "Speed";
+            public static final String SPEED_DT = "SpeedDetectionType";
+
+            public static final String ACC_TS = "AccelerationTimeStamp";
+            public static final String ACC_X = "AccelerationX";
+            public static final String ACC_Y = "AccelerationY";
+            public static final String ACC_Z = "AccelerationZ";
+
+            public static final String GS_TS = "GShockTimeStamp";
+            public static final String GS_E = "GShockEvent";
+            public static final String GS_ET = "GShockEventThreshold";
+
+            public static final String FCW_TS = "FCWTimeStamp";
+            public static final String FCW_EFV = "FCWExistFV";
+            public static final String FCW_TTC = "FCWTimeToCollision";
+            public static final String FCW_DFV = "FCWDistanceToFV";
+            //public static final String FCW_RSFV = "FCWRelativeSpeedToFV";
+            public static final String FCW_E = "FCWEvent";
+            public static final String FCW_ET = "FCWTEventThreshold";
+
+            public static final String LDW_TS = "LDWTimeStamp";
+            public static final String LDW_DLL = "LDWDistanceToLeftLane";
+            public static final String LDW_DRL = "LDWDistanceToRightLane";
+            public static final String LDW_E = "LDWEvent";
+
+            public static final String M_URI = "MediaURI";
+            public static final String M_D = "MediaDeleted";
+            public static final String M_U = "MediaUploaded";
+            public static final String D_U = "DataUploaded";
+        }
+d579 9
+d625 2
+a626 1
+                ContinuousData[] cd = new ContinuousData[nrows];
+d628 3
+a630 2
+                    cd[i] = new ContinuousData();
+                    cd[i].vehicleID = c.getString(0);
+d633 3
+a635 2
+                    cd[i].longitude = c.getFloat(1);
+                    cd[i].latitude = c.getFloat(2);
+d638 4
+a641 1
+                controller.postContinuousData(cd[0]); // send to FLA
+d647 2
+d650 38
+a687 12
+
+
+            valDB.post(new Runnable() {
+                public void run() {
+                    final int cnt = getRowCount();
+                    Log.d("ALFREDO","MainActivity.onViewDB "+String.valueOf(cnt));
+                    String dbt = "DB rowCount="+String.valueOf(cnt);
+                    valDB.setText(dbt);
+                }
+            });
+
+		}
+a690 38
+    // Fujitsu supplied class for encapsulating data, testing version shown
+    public class ContinuousDataNOT {
+        /*
+        public int messageID;
+        public String sessionID;
+        public String driverID;
+        public String submitterID;
+        */
+        public String vehicleID; // VIN
+        public int timezone;
+
+        public String gpsTimestamp; // from OS not GPS
+        public float longitude;
+        public float latitude;
+        public float speed;
+        public int speedDetectionType;
+
+        public String accelerationTimeStamp; /* yyyy-MM-dd HH:mm:ss.SSS for SQLite */
+        public float accelerationX;
+        public float accelerationY;
+        public float accelerationZ;
+
+        public String gShockTimeStamp;
+        public boolean gShockEvent;
+        public float gShockEventThreshold; /* might be a parameter from FLA */
+
+        public String fcwTimeStamp;
+        public boolean fcwExistFV;
+        public int fcwTimeToCollision;
+        public float fcwDistanceToFV;
+        /*public float fcwRelativeSpeedToFV;*/
+        public boolean fcwEvent;
+        public float fcwEventThreshold;
+
+        public String ldwTimeStamp;
+        public float ldwDistanceToLeftLane;
+        public float ldwDistanceToRightLane;
+        public boolean ldwEvent;
+a691 2
+        public String mediaURI;
+    }
+@
+
+
+1.22
+log
+@*** empty log message ***
+@
+text
+@a79 3
+        // NeuSoft executes these four lines somewhere to attach ODDC callback to NeuSoftClass
+        // and NueSoft callback to ODDC
+
+d101 2
+a102 1
+        if (vFiles != null) {
+d115 1
+a115 3
+    public void onDropTable(View view){
+        oddc.dbh.dropTable();
+    }
+d220 3
+a222 1
+                    if (! oddcOK) return; // fileSysCheck not OK
+d226 1
+d229 2
+a230 1
+                            f.createNewFile();
+d232 1
+a232 1
+                        catch(IOException ioe){}
+d234 1
+a234 1
+                    catch (NullPointerException npe){}
+d236 1
+a236 1
+            }, vRate, vRate);
+d562 1
+a562 1
+
+d668 1
+@
+
+
+1.21
+log
+@*** empty log message ***
+@
+text
+@d61 1
+d114 5
+a118 2
+    public void dropTable(View view){
+        oddc.dbh.
+d215 3
+a217 1
+                    oddcOK = listener.onContinuousData(mkContinuousData()); // invoke callback to send to ODDC
+a323 5
+
+
+
+
+
+d389 1
+d394 1
+a394 1
+	            db.execSQL(SQL_DELETE_ENTRIES);
+d400 4
+d467 1
+a467 2
+		private static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + DBschema.TABLE_NAME;
+d514 1
+a514 1
+            values.put(DBschema.TZ, tz.getRawOffset()); /* milliseconds */
+d571 2
+a572 1
+            String[] columns = new String[]{"vehicleID","gpsTimestamp","longitude","latitude"};
+d592 1
+a592 1
+                    cd[i].vehicleID = c.getString(1);
+d594 3
+a596 3
+                    cd[i].gpsTimestamp = Timestamp.valueOf(c.getString(2));
+                    //cd[i].longitude = c.getFloat(3);
+                    //cd[i].latitude = c.getFloat(4);
+d664 3
+a666 1
+        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss.SSS" );
+@
+
+
+1.20
+log
+@*** empty log message ***
+@
+text
+@d71 2
+d76 1
+a76 1
+        ODDCclass oddc = new ODDCclass(valDB);
+d101 17
+a241 4
+
+        // for continuous data and event data
+        // events are identified as ContinuousData.fcwEvent==true or ContinuousData.ldwEvent==true
+        // create data packet and assign values with direct assignment, i.e. cd.longitude = value
+d323 1
+a323 1
+        private ODDCdbHelper dbh;
+d330 1
+a330 1
+        TextView valDB;
+d332 1
+a332 1
+        public ODDCclass(TextView tv){this.valDB = tv;}
+d358 1
+a358 4
+            int ros = tz.getRawOffset();
+            //msgView.setText("TZ.RawOffset "+String.valueOf(ros));
+            //msgView.append("\nDSTSavings "+String.valueOf(dstMillisec));
+            //msgView.append("\nTZ.observesDaylightTime "+isDST);
+d380 1
+a380 1
+	        public static final int DATABASE_VERSION = 2;
+a391 2
+	            // This database is only a cache for online data, so its upgrade policy is
+	            // to simply to discard the data and start over
+d553 4
+a556 8
+            //TextView msgView = (TextView) findViewById(R.id.msgView);
+            //msgView.append("\nDataDirectory.getPath="+Environment.getDataDirectory().getPath());
+            /*
+            try {
+                msgView.append("\nDataDirectory.getCanonicalPath=" + Environment.getDataDirectory().getCanonicalPath());
+            }
+            catch (java.io.IOException ioe){}
+            */
+a558 14
+            // code above is for testing, code below is for production
+            long availSpace = Environment.getDataDirectory().getUsableSpace();
+/*
+            File d = new File(Environment.getDataDirectory().getPath());
+            File[] dFiles = d.listFiles();
+            if (dFiles != null) {
+                msgView.append("\nDataDirectry "+dFiles.length+" files");
+                for (File f : dFiles) {
+                    if (f.isFile()) {
+                        msgView.append("\n" + f.getPath());
+                    }
+                }
+            }
+*/
+@
+
+
+1.19
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+package com.fujitsu.fla.oddc;
+d35 2
+d41 1
+a41 1
+import com.fujitsu.fla.oddc.ContinuousData;
+d54 2
+d89 47
+d146 1
+d220 1
+a220 1
+        String dateTime = getTimestamp();
+d231 1
+a231 1
+        cd.timezone = 0;
+d246 1
+a246 1
+        cd.gShockEventThreshold = getRandomFloat(); /* might be a parameter from FLA */
+d250 1
+a250 1
+        cd.fcwTimeToCollision = 0;
+d302 1
+a302 1
+        private final String baseUrl = "http://192.168.168.68:8080//";
+a415 1
+                    DBschema.TZ       + " INT," +
+d417 1
+a417 1
+                    DBschema.GPS_TS   + " DATETIME," +
+d424 1
+a424 1
+                    DBschema.ACC_TS   + " DATETIME," +
+d429 1
+a429 1
+                    DBschema.GS_TS    + " DATETIME," +
+d433 1
+a433 1
+                    DBschema.FCW_TS   + " DATETIME," +
+d441 1
+a441 1
+                    DBschema.LDW_TS   + " DATETIME," +
+d515 1
+a515 1
+            values.put(DBschema.GS_ET, data.gShockEventThreshold);
+d519 1
+a519 1
+            values.put(DBschema.FCW_TTC, data.fcwTimeToCollision);
+d595 4
+a598 4
+                    cd[i].timezone = c.getInt(2);
+                    cd[i].gpsTimestamp = c.getString(3);
+                    //cd[i].longitude = c.getFloat(4);
+                    //cd[i].latitude = c.getFloat(5);
+d601 1
+a601 1
+                controller.postContinuousData(cd); // send to FLA
+@
+
+
+1.18
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+package com.example.jalfredo.oddccallback;
+d8 3
+d12 1
+d39 1
+a39 1
+import com.example.jalfredo.oddccallback.ContinuousData;
+d52 2
+d56 1
+d58 2
+a59 1
+    boolean oddcOK = true;
+d67 2
+d70 1
+a70 1
+        TextView msgView = (TextView) findViewById(R.id.msgView);
+d78 1
+a78 2
+        final ODDCclass oddc = new ODDCclass();
+        final NeusoftSimulator nsc = new NeusoftSimulator();
+d85 9
+d254 2
+d263 6
+d277 1
+a277 1
+            TextView msgView = (TextView) findViewById(R.id.msgView);
+d301 2
+a302 2
+            boolean fsStat = checkFileSpace();
+            return fsStat;
+d308 5
+d354 1
+a354 1
+            boolean fsStat = checkFileSpace();
+d356 1
+a356 1
+            return fsStat;
+d491 2
+a492 2
+        public boolean checkFileSpace(){
+            TextView msgView = (TextView) findViewById(R.id.msgView);
+d516 2
+a517 2
+            if (availSpace > MIN_AVAIL_FS) return true;
+            else                           return false; // delete some files
+d556 12
+@
+
+
+1.17
+log
+@*** empty log message ***
+@
+text
+@a37 1
+	int seqNum = 0; // ALFREDO used by onContinuousData
+d41 1
+a41 1
+    public static int frameRate = 15;
+d121 1
+a121 3
+
+                    if (! oddcOK) return; // fileSysCheck not OK
+
+d129 1
+d134 4
+a139 1
+
+a144 18
+
+
+        private void sendContinuousData() {
+            // NeuSoft prepares data for transfer somewhere in their code
+
+            // for continuous data and event data
+            // events are identified as ContinuousData.fcwEvent==true or ContinuousData.ldwEvent==true
+            // create data packet and assign values with direct assignment, i.e. cd.longitude = value
+
+            if (! oddcOK) return; // fileSysCheck not OK
+
+            //ContinuousData cd = new ContinuousData();
+            oddcOK = listener.onContinuousData(mkContinuousData()); // invoke callback to send to ODDC
+            if (oddcOK){
+                neusoftVid();
+            }
+        }
+
+a213 2
+
+
+a218 10
+
+        private void neusoftVid(){
+            String fname = mkFileName();
+            File v = new File(Environment.getDataDirectory().getPath() + File.separator + fname);
+            try {
+                v.createNewFile();
+            }
+            catch (IOException ioe){}
+
+        }
+d225 1
+d229 2
+a230 1
+		int SENDCOUNT = frameRate * 60 * 60 / SAMPLE_FREQ;
+d232 1
+a232 1
+        private final String baseUrl = "http://10.0.2.2:8080//";
+d257 1
+a257 1
+            RESTController controller = new RESTController(baseUrl);
+d266 3
+a268 3
+            msgView.setText("TZ.RawOffset "+String.valueOf(ros));
+            msgView.append("\nDSTSavings "+String.valueOf(dstMillisec));
+            msgView.append("\nTZ.observesDaylightTime "+isDST);
+a306 3
+
+
+
+a311 6
+
+
+
+
+
+
+d314 1
+a314 2
+
+			seqNum++;
+a328 16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+d462 2
+a463 1
+            msgView.append("\nDataDirectory.getPath="+Environment.getDataDirectory().getPath());
+d468 1
+d491 1
+d493 1
+a493 1
+            String selection = new String("where rowid % ? = 0 and DataUploaded = 0");
+d515 2
+a516 2
+                    cd[i].longitude = c.getFloat(4);
+                    cd[i].latitude = c.getFloat(5);
+d519 1
+a520 7
+            // send to FLA
+
+            //ContentValues values = new ContentValues();
+            //values.put(DBschema.D_U, false);
+            //String whereClause = new String("rowid % 10 = 0 and DataUploaded = 0");
+            //String[] whereArgs = new String[]{String.valueOf(SAMPLE_FREQ)};
+            //db.update(DBschema.TABLE_NAME,values,whereClause,whereArgs);
+d522 2
+a523 1
+            String sqlStmt = new String("update oddc set DataUploaded = 1 where rowid % "+SAMPLE_FREQ+" = 0 and DataUploaded = 0 limit "+SENDCOUNT);
+@
+
+
+1.16
+log
+@*** empty log message ***
+@
+text
+@d20 4
+d39 1
+a39 1
+    private static Context mContext;
+d41 9
+a49 1
+    public int frameRate = 15;
+d66 1
+d70 1
+a70 1
+        final NeuSoftClass nsc = new NeuSoftClass();
+d93 7
+a99 1
+
+d103 1
+a103 1
+    public class NeuSoftClass extends Thread implements NeuSoftInterface {
+d105 3
+d109 1
+a109 1
+        public void setListener(ODDCclass listener){
+d115 28
+a142 1
+        public NeuSoftClass() {}
+d146 1
+a146 1
+        private void someNeuSoftFunctionForSendingData() {
+d155 2
+a156 2
+            ContinuousData cd = new ContinuousData();
+            oddcOK = listener.onContinuousData(cd); // invoke callback to send to ODDC
+d162 72
+a233 1
+        private String mkFileName(){
+d267 1
+a267 1
+        private NeuSoftClass listener;
+d270 1
+a270 1
+        public void setListener(NeuSoftClass listener){
+d283 1
+d341 7
+d364 17
+@
+
+
+1.15
+log
+@added db.update DataUploaded
+@
+text
+@d31 2
+d139 3
+d143 1
+a143 1
+		private ODDCdbHelper dbh;
+d163 4
+d440 1
+a440 1
+    public class ContinuousData {
+@
+
+
+1.14
+log
+@*** empty log message ***
+@
+text
+@d278 2
+a279 2
+            public static final String GPS_LON = "Longitude";
+            public static final String GPS_LAT = "Latitude";
+d388 3
+a390 3
+        String[] columns = new String[]{"vehicleID","gpsTimestamp","longitude","latitude"};
+        String selection = new String("where rowid % ? = 0 and DataUploaded = 0");
+        String[] selectionArgs = new String[]{String.valueOf(SAMPLE_FREQ)};
+d392 1
+a392 1
+        Cursor cr = db.query (DBschema.TABLE_NAME,
+d401 25
+a425 4
+			// send to FLA
+			// set all DataUploaded = 1;
+		
+		
+d439 1
+@
+
+
+1.13
+log
+@*** empty log message ***
+@
+text
+@d12 5
+d21 1
+d33 4
+d52 2
+d120 4
+a123 2
+            v.createNewFile();
+
+d131 1
+d135 2
+a136 1
+		int SENDCOUNT = 30 * 60 * 60 / SAMPLE_FREQ;
+d149 1
+d155 3
+d168 3
+a170 1
+			dbh = new ODDCdbHelper();
+a265 1
+                    DBschema.D_S      + " BOOLEAN," +
+a308 1
+			public static final String D_S = "DataSelected";
+a329 1
+
+a349 1
+            values.put(DBschema.D_S, seqNum % SAMPLE_FREQ == 0 ? true : false);
+d388 12
+a400 10
+        /*Cursor query (String table,
+                String[] columns, 
+                String selection, 
+                String[] selectionArgs, 
+                String groupBy, 
+                String having, 
+                String orderBy, 
+                String limit)*/
+			// Cursor c = db.query(DBschema.TABLE_NAME,
+				select rowid,VehicleID from oddc where rowid % 10 = 0 and DataUploaded = 0;
+@
+
+
+1.12
+log
+@*** empty log message ***
+@
+text
+@d26 1
+d94 17
+d117 6
+a125 1
+        private static final int SENDCOUNT = 10;
+d127 1
+a127 1
+        private int sentCount = 0;
+d148 2
+d157 26
+d192 1
+d194 2
+a195 1
+            if (sentCount == SENDCOUNT){
+d197 1
+a197 1
+                sentCount = 0;
+d199 1
+a199 1
+            else sentCount++;
+d206 45
+d276 1
+a276 1
+            public static final String FCW_RSFV = "FCWRelativeSpeedToFV";
+d286 1
+a286 1
+            public static final String M_P = "MediaProtected";
+d288 1
+d329 1
+a329 1
+            values.put(DBschema.M_P, data.gShockEvent | data.fcwEvent | data.ldwEvent);
+d331 1
+a350 1
+            long totalSpace = Environment.getDataDirectory().getTotalSpace();
+d352 1
+a352 4
+            long availPercent = ( 100 * availSpace ) / totalSpace;
+
+            msgView.append("\ntotalSpace:"+String.valueOf(totalSpace)+"  availSpace:"+String.valueOf(availSpace)+"  "+String.valueOf(availPercent)+"%");
+
+d363 4
+a367 3
+            if (availPercent > 60) return true;
+            else                   return false;
+        }
+d369 1
+d371 15
+a385 1
+        public void sendToFLA(){} /* code supplied by Yuri */
+@
+
+
+1.11
+log
+@*** empty log message ***
+@
+text
+@d54 1
+a54 1
+        public List<String> getEvenbtLog();
+d89 1
+a89 1
+            if (! oddcOK) return;
+d135 1
+a135 1
+        public List<String> getEvenbtLog(){return Arrays.asList("TBD");}
+d206 1
+a206 1
+            values.put(DBschema.ACC_TS, data.accelerationTimeStamp);
+d212 1
+a212 1
+            values.put(DBschema.GS_TS, data.gShockTimeStamp);
+d216 1
+a216 1
+            values.put(DBschema.FCW_TS, data.fcwTimeStamp);
+d220 1
+a220 1
+            values.put(DBschema.FCW_RSFV, data.fcwRelativeSpeedToFV);
+d224 1
+a224 1
+            values.put(DBschema.LDW_TS, data.ldwTimeStamp);
+a228 1
+
+d239 2
+a242 2
+
+
+d249 2
+d257 11
+d287 1
+a287 1
+        //public Timestamp gpsTimestamp; // from OS not GPS
+d304 1
+a304 1
+        public boolean fcwTimeToCollision;
+d306 1
+a306 1
+        public float fcwRelativeSpeedToFV;
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@d6 1
+d11 3
+a15 1
+import java.sql.Time;
+a22 1
+import android.util.Log;
+d25 1
+a25 2
+import 	java.sql.Timestamp;
+
+d27 1
+a27 3
+import android.view.View;
+
+public class MainActivity extends AppCompatActivity {
+d36 1
+a36 1
+        TextView dbTitle = (TextView) findViewById(R.id.dbTitle);
+d39 2
+a40 2
+// NeuSoft executes these four lines somewhere to attach ODDC callback to NeuSoftClass
+// and NueSoft callback to ODDC
+d46 1
+a46 1
+        boolean ok = oddc.ok2Startup();
+d52 1
+a52 1
+        public void onContinuousData(ContinuousData data);
+d88 3
+d92 1
+a92 1
+            listener.onContinuousData(cd); // invoke callback to send to ODDC
+d113 1
+a113 1
+            TextView dbTitle = (TextView) findViewById(R.id.dbTitle);
+d120 8
+a127 5
+            dbTitle.setText("TZ.RawOffset "+String.valueOf(ros));
+            dbTitle.append("\nDSTSavings "+String.valueOf(dstMillisec));
+            dbTitle.append("\nTZ.observesDaylightTime "+isDST);
+
+            return true;}
+d138 1
+a138 1
+        public void onContinuousData(final ContinuousData data){
+a144 1
+                checkFileSpace();
+d148 3
+a238 1
+        public void sendToFLA(){} /* code supplied by Yuri */
+d240 20
+a259 1
+        public void checkFileSpace(){}
+d261 1
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d3 1
+d6 13
+a18 2
+import java.util.Timer;
+import java.util.TimerTask;
+d23 3
+a25 4
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import android.widget.Button;
+import android.widget.EditText;
+d29 1
+a29 4
+    TextView cdVal;
+    TextView edVal;
+    Button btnSeqNum;
+    EditText seqNumVal;
+a35 5
+        // for testing only
+        cdVal  = (TextView)findViewById(R.id.cdVal);
+        edVal  = (TextView)findViewById(R.id.edVal);
+        btnSeqNum = (Button)findViewById(R.id.btnSeqNum);
+        seqNumVal = (EditText)findViewById(R.id.seqNumVal);
+d37 1
+d40 1
+a40 1
+// NeuSoft executes these four lines to attach ODDC callback to NeuSoftClass
+d47 1
+a47 10
+
+        // for testing only
+        btnSeqNum.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                // as if data had come from FLA, send to NeuSoft
+				// can be sent from any origin, GUI or network
+                nsc.onSeqNum(Integer.parseInt(seqNumVal.getText().toString()));
+            }
+        });
+d51 1
+a51 1
+    // ODDC callbacks which NeuSoft calls to send data to ODDC
+d54 5
+a58 2
+        public void onEventData(EventData data);
+		public String onFetchLog(); // request
+d61 1
+a61 1
+    // NeuSoft callbacks which ODDC callbacks to send data to NeuSoft
+d63 1
+a63 4
+        public void onStart();
+        public void onPause();
+        public void onStop();
+        public void onSeqNum(int seqNum);
+d69 1
+a69 1
+// NeuSoft delivers data to Fujitsu by calling listener.onContinuousData() and listener.onEventData()
+a72 12
+        int cSeqNum = 0; // for testing only
+        int eSeqNum = 0; // for testing only
+        Timer ctimer;   // for testing only
+        Timer etimer;   // for testing only
+
+        public void onStart(){}
+        public void onPause(){}
+        public void onStop(){}
+        public void onSeqNum(int seqNum){
+            cSeqNum = seqNum;
+        }
+
+d74 2
+a75 8
+            this.listener = listener;
+        }
+
+        public NeuSoftClass() {
+            // NeuSoft prepares data for transfer
+            // The Timer is used only to create dummy data for demo
+            int cDataInt = 2000;
+
+d77 1
+d79 1
+a79 3
+            ctimer = new Timer(); // for testing only
+            ctimer.scheduleAtFixedRate(new TimerTask(){ /* for testing only */
+                public void run(){
+a80 5
+                    // NeuSoft creates data packet
+                    ContinuousData cd = new ContinuousData("ContinuousDataFromNeuSoftClass " + cSeqNum);
+                    // NeuSoft invokes callback
+                    listener.onContinuousData(cd);
+                    String log = listener.onFetchLog();
+a81 1
+                    Log.d("ALFREDO","onFetchLog "+log);
+d83 2
+a84 3
+                    cSeqNum++; // for testing only
+                }
+            }, 1000,cDataInt);
+d86 5
+a90 12
+            etimer = new Timer(); // for testing only
+            etimer.scheduleAtFixedRate(new TimerTask(){ /* for testing only */
+                public void run(){
+
+                    // NeuSoft creates data packet
+                    EventData ed = new EventData("EventDataFromNeuSoftClass " + eSeqNum);
+                    // NeuSoft invokes callback
+                    listener.onEventData(ed);
+
+                    eSeqNum++; // for testing only
+                }
+            }, 1000,5700);
+a94 2
+
+
+d97 4
+d102 2
+d108 20
+a127 3
+        public String onFetchLog(){
+            return "ABC";
+        }
+d129 3
+a131 2
+        public void onEventData(final EventData data){
+            // Fujitsu processing of event data
+a132 7
+            // for testing only
+            edVal.post(new Runnable() {
+                public void run() {
+                    edVal.setText(getTimestamp() + " " +  data.val());
+                }
+            });
+        }
+d134 9
+a142 1
+            // Fujitsu processing of continuous data
+a143 6
+            // for testing only
+            cdVal.post(new Runnable() {
+                public void run() {
+                    cdVal.setText(getTimestamp() + " " +  data.val());
+                }
+            });
+a144 1
+    }
+d146 39
+a185 3
+    // Fujitsu supplied class for encapsulating data, testing version shown
+    public class ContinuousData {
+        String data; // for testing only
+d187 40
+a226 8
+        float longitude;
+        float latitude;
+        int speed;
+        // etc
+        // timestamp FCWTimeStamp;
+        // boolean FCSExistFV;
+        // boolean FCWCutIn;
+        // etc
+d228 1
+d230 1
+a230 3
+        public ContinuousData(String d){
+            // only dummy string used for testing
+            this.data = d;
+d232 3
+a234 2
+        public String val(){return data;}
+    }
+a235 8
+    // Fujitsu supplied class for encapsulating data, testing version shown
+    public class EventData {
+        String data; // for testing only
+        public EventData(String d){
+            // data members TBD
+            this.data = d;
+        }
+        public String val(){return data;}
+d239 37
+d277 2
+a279 1
+    // for testing only
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d7 2
+d13 3
+a15 2
+
+
+d20 2
+d31 3
+d35 5
+a39 3
+// NeuSoft executes these three lines to attach Fujitsu callback to NeuSoftClass
+        ODDCinterface oddc = new ODDCinterface();
+        NeuSoftClass nsc = new NeuSoftClass();
+d41 12
+d56 2
+a57 3
+// defined and visible to both NeuSoft and Fujitsu
+// could include additional functions
+    public interface ODDClistener {
+d60 9
+d72 1
+d75 2
+a76 3
+    public class NeuSoftClass extends Thread {
+        private ODDClistener nslistener;
+
+d81 1
+a81 2
+        Timer etimer;
+
+d83 6
+d90 2
+a91 2
+        public void setListener(ODDClistener listener){
+            this.nslistener = listener;
+d97 1
+d102 1
+a102 1
+            ctimer.scheduleAtFixedRate(new TimerTask(){
+d108 4
+a111 1
+                    nslistener.onContinuousData(cd);
+d115 1
+a115 1
+            }, 1000,2000);
+d118 1
+a118 1
+            etimer.scheduleAtFixedRate(new TimerTask(){
+d124 1
+a124 1
+                    nslistener.onEventData(ed);
+d134 12
+a145 2
+    // Fujitsu supplied class containing callback functions
+    public class ODDCinterface extends Thread implements ODDClistener {
+d168 1
+d173 9
+d184 1
+a184 1
+            // data members TBD
+d199 1
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d48 4
+a51 4
+
+
+        int seqNum = 0;
+        Timer dtimer;
+d61 1
+a63 1
+            // for testing only
+d65 2
+a66 2
+            dtimer = new Timer();
+            dtimer.scheduleAtFixedRate(new TimerTask(){
+d68 4
+a71 1
+                    ContinuousData cd = new ContinuousData("DataFromNeuSoftClass " + seqNum);
+d73 2
+a74 1
+                    seqNum++;
+d77 13
+d99 7
+a110 1
+
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d46 5
+d52 3
+d60 3
+d64 1
+d68 1
+a68 1
+                    ContinuousData cd = new ContinuousData("DataFromNeuSoftClass");
+d70 1
+d85 3
+d90 1
+a90 1
+                    cdVal.append("\n" + getTimestamp() + " " +  data.val());
+d99 1
+a99 3
+        timmestamp
+        longitute
+                latitude
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d83 4
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@a4 1
+import android.util.Log;
+a17 1
+
+d64 1
+d80 1
+a80 1
+    // Fujitsu supplied class, testing version shown
+d90 1
+a90 1
+    // Fujitsu supplied class, testing version shown
+@
+
+
+1.3
+log
+@onContinuousData working
+@
+text
+@d25 1
+d27 1
+a27 1
+        //edVal  = (TextView)findViewById(R.id.edVal);
+d29 1
+a29 2
+
+        Log.d("ALFREDO","ODDCcallback MainActivity");
+d36 2
+a37 1
+// visible to both NeuSoft and Fujitsu
+d39 2
+a40 2
+        public void onContinuousData(String data);
+        public void onEventData(String data);
+d43 3
+a45 1
+// classname visible to Fujitsu
+d54 1
+a54 1
+            Log.d("ALFREDO","ODDCcallback NeuSoftClass.CONSTRUCTOR");
+d58 2
+a59 1
+                    nslistener.onContinuousData("DataFromNeuSoftClass");
+a64 7
+    private static String getTimestamp(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss.SSS" );
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+
+d66 1
+d68 5
+a72 3
+        public void onEventData(final String data){}
+        public void onContinuousData(final String data){
+            Log.d("ALFREDO","ODDCinterface "+data);
+d75 1
+a75 1
+                    cdVal.append("\n" + getTimestamp() + " " +  data);
+d81 20
+d103 6
+@
+
+
+1.2
+log
+@renamed ODDCclass to ODDCinterface
+@
+text
+@d8 6
+d16 3
+d25 4
+a32 1
+
+d36 1
+a36 2
+
+    //
+d42 1
+d53 1
+a53 1
+            dtimer.schedule(new TimerTask(){
+d55 1
+a55 1
+                    nslistener.onEventData("EventDataFromNeuSoftClass");
+d57 1
+a57 1
+            }, 1000);
+d61 6
+d70 2
+a71 4
+        public void onContinuousData(String data){
+            ;
+        }
+        public void onEventData(String data){
+d73 5
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d5 3
+d15 6
+d23 3
+d31 1
+a31 1
+    public class NeuSoftClass {
+d33 1
+d37 10
+d49 3
+a51 1
+    public class ODDCclass implements ODDClistener {
+d56 1
+a56 1
+            ;
+@

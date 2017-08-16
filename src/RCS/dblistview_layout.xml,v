@@ -1,0 +1,276 @@
+head	1.4;
+access;
+symbols;
+locks
+	jalfredo:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2017.08.15.22.32.02;	author jalfredo;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2017.08.15.01.21.46;	author jalfredo;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2017.08.14.22.48.48;	author jalfredo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2017.08.12.01.14.40;	author jalfredo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@@+id/dblistview_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dip" >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@@+id/rowLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RowID: " />
+        <TextView
+            android:id="@@+id/rowVal"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+        <TextView
+            android:id="@@+id/duLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DU: "/>
+        <TextView
+            android:id="@@+id/duVal"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:id="@@+id/mdLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MD: "/>
+        <TextView
+            android:id="@@+id/mdVal"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@@+id/gpsTSlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GPStimeStamp: " />
+        <TextView
+            android:id="@@+id/gpsTSval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@@+id/uriLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MediaURI: " />
+        <TextView
+            android:id="@@+id/mediaURI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
+</LinearLayout>
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d20 1
+a20 2
+            android:layout_width="0dp"
+            android:layout_weight="0.02"
+d24 7
+a30 2
+            android:id="@@+id/vinLabel"
+            android:layout_width="0dp"
+d32 2
+a33 2
+            android:layout_weight="0.02"
+            android:text="VehicleID: " />
+d35 1
+a35 1
+            android:id="@@+id/vinVal"
+d38 5
+a49 1
+
+d52 1
+a52 1
+            android:layout_width="10dp"
+a53 1
+            android:layout_weight=".30"
+a59 25
+
+        <TextView
+            android:id="@@+id/duLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".30"
+            android:text="DU: "/>
+        <TextView
+            android:id="@@+id/duVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:id="@@+id/mdLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".30"
+            android:text="MD: "/>
+        <TextView
+            android:id="@@+id/mdVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+d68 1
+a68 1
+            android:layout_width="0dp"
+a69 1
+            android:layout_weight=".30"
+a75 1
+
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d41 1
+d44 12
+d59 1
+a59 1
+            android:text="GPStimeStamp: "/>
+d61 1
+a61 1
+            android:id="@@+id/gpsTSval"
+a64 1
+    </LinearLayout>
+a65 4
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+d67 1
+a67 1
+            android:id="@@+id/gpsLONlabel"
+d71 1
+a71 1
+            android:text="longitude: " />
+d73 1
+a73 1
+            android:id="@@+id/gpsLONval"
+d77 7
+d85 1
+a85 1
+            android:id="@@+id/gpsLATlable"
+d89 1
+a89 1
+            android:text="latitude: " />
+d91 1
+a91 1
+            android:id="@@+id/gpsLATval"
+d95 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a2 2
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+d12 12
+a23 3
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+d28 2
+a29 3
+            android:layout_weight=".30"
+            android:text="VehicleID: "
+            android:textAlignment="textEnd" />
+d34 1
+a34 2
+            android:text=""
+             />
+d40 1
+a40 3
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+a45 1
+            android:textAlignment="textEnd"
+a53 1
+
+d57 1
+a57 3
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+a62 1
+            android:textAlignment="textEnd"
+a68 8
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+a73 1
+            android:textAlignment="textEnd"
+@

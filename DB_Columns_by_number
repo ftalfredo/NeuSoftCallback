@@ -1,0 +1,40 @@
+   	private static final String SQL_CREATE_TABLE =
+            "CREATE TABLE IF NOT EXISTS " + DBschema.TABLE_NAME + " (" +
+                 0  DBschema._ID      + " INTEGER PRIMARY KEY," +
+                 1  DBschema.VIN      + " CHAR(18)," +
+                 2  DBschema.TZ       + " INT," +
+
+                 3  DBschema.GPS_TS   + " DATETIME," +
+                 4  DBschema.GPS_LON  + " FLOAT(10,6)," +
+                 5  DBschema.GPS_LAT  + " FLOAT(10,6)," +
+
+                 6  DBschema.SPEED    + " FLOAT(5,2)," +
+                 7  DBschema.SPEED_DT + " INT," +
+
+                 8  DBschema.ACC_TS   + " DATETIME," +
+                 9  DBschema.ACC_X    + " FLOAT(10,6)," +
+                10  DBschema.ACC_Y    + " FLOAT(10,6)," +
+                11  DBschema.ACC_Z    + " FLOAT(10,6)," +
+
+                12  DBschema.GS_TS    + " DATETIME," +
+                13  DBschema.GS_E     + " BOOLEAN," +
+                14  DBschema.GS_ET    + " FLOAT(10,6)," +
+
+                15  DBschema.FCW_TS   + " DATETIME," +
+                16  DBschema.FCW_EFV  + " BOOLEAN," +
+                17  DBschema.FCW_TTC  + " INT," +
+                18  DBschema.FCW_DFV  + " FLOAT(5,2)," +
+                    //DBschema.FCW_RSFV + " FLOAT(5,2)," +
+                19  DBschema.FCW_E    + " BOOLEAN," +
+                20  DBschema.FCW_ET   + " FLOAT(5,2)," +
+
+                21  DBschema.LDW_TS   + " DATETIME," +
+                22  DBschema.LDW_DLL  + " FLOAT(5,2)," +
+                23  DBschema.LDW_DRL  + " FLOAT(5,2)," +
+                24  DBschema.LDW_E    + " BOOLEAN," +
+
+                25  DBschema.M_URI    + " VARCHAR(32)," +
+                26  DBschema.M_D      + " BOOLEAN," +
+                27  DBschema.M_U      + " BOOLEAN," +
+                28  DBschema.D_U      + " BOOLEAN )";
+
