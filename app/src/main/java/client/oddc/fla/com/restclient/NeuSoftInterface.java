@@ -1,0 +1,7 @@
+package client.oddc.fla.com.restclient;
+
+
+public interface NeuSoftInterface {
+    public void onFLAparam(int param); // TBD
+
+}

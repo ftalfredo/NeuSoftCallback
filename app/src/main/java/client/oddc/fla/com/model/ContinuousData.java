@@ -46,7 +46,7 @@ public class ContinuousData
     public Timestamp gShockTimeStamp;
     @JsonProperty("gShockEvent")
     public boolean gShockEvent;
-    //public double gShockEventThreshold; // might be a parameter from FLA
+    public double gShockEventThreshold; // might be a parameter from FLA
 
     @JsonProperty("fcwTimeStamp")
     public Timestamp fcwTimeStamp;

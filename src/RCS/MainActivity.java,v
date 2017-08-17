@@ -1,10 +1,15 @@
-head	1.32;
+head	1.33;
 access;
 symbols;
 locks
-	jalfredo:1.32; strict;
+	jalfredo:1.33; strict;
 comment	@# @;
 
+
+1.33
+date	2017.08.17.23.10.50;	author jalfredo;	state Exp;
+branches;
+next	1.32;
 
 1.32
 date	2017.08.16.02.31.05;	author jalfredo;	state Exp;
@@ -171,9 +176,9 @@ desc
 @@
 
 
-1.32
+1.33
 log
-@put SendToFLA in thread
+@*** empty log message ***
 @
 text
 @package client.oddc.fla.com.restclient;
@@ -218,6 +223,8 @@ import android.widget.TextView;
 import client.oddc.fla.com.model.ContinuousData;
 import client.oddc.fla.com.model.ContinuousDataCollection;
 import client.oddc.fla.com.model.ODDCJob;
+import client.oddc.fla.com.restclient.ODDCclass;
+import client.oddc.fla.com.restclient.NeuSoftSimulator;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -227,16 +234,16 @@ public class MainActivity extends AppCompatActivity {
     public static int frameRate = 30; // for NeuSoft set value somewhere for getFrameRate()
     public static int getFrameRate(){return frameRate;}
 
-    public String currentFilename = "";  // TESTING ONLY
-    public File mVideoFolder; // for NeuSoft set value
-    public String baseUrl;
+
+    public static File mVideoFolder; // for NeuSoft set value
+    public static String baseUrl;
 
     ODDCclass oddc;
-    boolean oddcOK = false;
+    public static boolean oddcOK = false;
 
 
-    final NeusoftSimulator nsc = new NeusoftSimulator(); // TESTING ONLY
-    boolean cTimerRunning = false; // TESTING ONLY
+    NeuSoftSimulator nsc = new NeuSoftSimulator(); // TESTING ONLY
+    static boolean cTimerRunning = false; // TESTING ONLY
     TextView msgView; // TESTING ONLY
     TextView dbCount; // TESTING ONLY
     TextView fsCount; // TESTING ONLY
@@ -261,6 +268,10 @@ public class MainActivity extends AppCompatActivity {
         oddcOK = oddc.ok2Startup();
     }
 
+    public static String getBaseUrl(){return baseUrl;}
+    public static File getVideoFolder(){return mVideoFolder;}
+    public static boolean isCTimerRunning(){return cTimerRunning;} // TESTING ONLY
+
 
     // TESTING ONLY
     public void getJobList(View view){
@@ -278,8 +289,6 @@ public class MainActivity extends AppCompatActivity {
             fsCount.setText(String.valueOf(vFiles.length));
         }
     }
-
-
 
     // TESTING ONLY
     public void onViewFS(View view){
@@ -306,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onStart(View view){cTimerRunning = true;oddcOK = true;}  // TESTING ONLY
     public void onStop(View view){cTimerRunning = false;oddcOK = false;}  // TESTING ONLY
-    public void onDropTable(View view){oddc.dbh.dropTable();} // TESTING ONLY
+    public void onDropTable(View view){oddc.dropTable();} // TESTING ONLY
 
 
 
@@ -356,6 +365,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // If NeuSoft creates folder, please set mVideoFolder to location
+    private void createVideoFolder() {
+        mVideoFolder = mContext.getDir("FLA", Context.MODE_PRIVATE); //Creating an internal dir;
+    }
+
+}
+@
+
+
+1.32
+log
+@put SendToFLA in thread
+@
+text
+@d43 2
+d54 3
+a56 3
+    public String currentFilename = "";  // TESTING ONLY
+    public File mVideoFolder; // for NeuSoft set value
+    public String baseUrl;
+d59 1
+a59 1
+    boolean oddcOK = false;
+d62 2
+a63 2
+    final NeusoftSimulator nsc = new NeusoftSimulator(); // TESTING ONLY
+    boolean cTimerRunning = false; // TESTING ONLY
+d88 4
+a109 2
+
+
+d135 1
+a135 1
+    public void onDropTable(View view){oddc.dbh.dropTable();} // TESTING ONLY
+a184 9
 
 
 
@@ -365,11 +409,7 @@ public class MainActivity extends AppCompatActivity {
         public void onFLAparam(int param); // TBD
     }
 
-    // If NeuSoft creates folder, please set mVideoFolder to location
-    private void createVideoFolder() {
-        mVideoFolder = mContext.getDir("FLA", Context.MODE_PRIVATE); //Creating an internal dir;
-    }
-
+a189 537
 
     // TESTING, however this class implements NeuSoftInterface
     // Some NeuSoft class would implement NeuSoftInterface as does this class,
@@ -907,7 +947,6 @@ Log.d("ALFREDO","onContinuousData() "+String.valueOf(FRAMES_PER_MIN)+" "+String.
 
         return dateFormat.format(date);
     }
-}
 @
 
 

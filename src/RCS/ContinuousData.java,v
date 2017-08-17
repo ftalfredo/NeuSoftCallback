@@ -1,10 +1,15 @@
-head	1.7;
+head	1.8;
 access;
 symbols;
 locks
-	jalfredo:1.7; strict;
+	jalfredo:1.8; strict;
 comment	@# @;
 
+
+1.8
+date	2017.08.17.21.24.23;	author jalfredo;	state Exp;
+branches;
+next	1.7;
 
 1.7
 date	2017.08.15.22.32.02;	author jalfredo;	state Exp;
@@ -46,7 +51,7 @@ desc
 @@
 
 
-1.7
+1.8
 log
 @*** empty log message ***
 @
@@ -99,7 +104,7 @@ public class ContinuousData
     public Timestamp gShockTimeStamp;
     @@JsonProperty("gShockEvent")
     public boolean gShockEvent;
-    //public double gShockEventThreshold; // might be a parameter from FLA
+    public double gShockEventThreshold; // might be a parameter from FLA
 
     @@JsonProperty("fcwTimeStamp")
     public Timestamp fcwTimeStamp;
@@ -128,6 +133,17 @@ public class ContinuousData
     @@JsonProperty("mediaURI")
     public String mediaURI;
 }
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d49 1
+a49 1
+    //public double gShockEventThreshold; // might be a parameter from FLA
 @
 
 
