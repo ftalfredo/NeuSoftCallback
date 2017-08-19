@@ -1,10 +1,15 @@
-head	1.8;
+head	1.9;
 access;
 symbols;
 locks
-	jalfredo:1.8; strict;
+	jalfredo:1.9; strict;
 comment	@# @;
 
+
+1.9
+date	2017.08.18.00.30.18;	author jalfredo;	state Exp;
+branches;
+next	1.8;
 
 1.8
 date	2017.08.17.21.24.23;	author jalfredo;	state Exp;
@@ -51,7 +56,7 @@ desc
 @@
 
 
-1.8
+1.9
 log
 @*** empty log message ***
 @
@@ -67,10 +72,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import client.oddc.fla.com.utilities.Utilities;
+
 public class ContinuousData
 {
-    @@JsonProperty("messageID")
-    public int messageID;
+    @@JsonProperty("id")
+    public String id;
     @@JsonProperty("sessionID")
     public String sessionID;
     @@JsonProperty("vehicleID")
@@ -104,7 +111,8 @@ public class ContinuousData
     public Timestamp gShockTimeStamp;
     @@JsonProperty("gShockEvent")
     public boolean gShockEvent;
-    public double gShockEventThreshold; // might be a parameter from FLA
+    @@JsonProperty("gShockEventThreshold")
+    public double gShockEventThreshold;
 
     @@JsonProperty("fcwTimeStamp")
     public Timestamp fcwTimeStamp;
@@ -129,10 +137,67 @@ public class ContinuousData
     public double ldwDistanceToRightLane;
     @@JsonProperty("ldwEvent")
     public boolean ldwEvent;
-
     @@JsonProperty("mediaURI")
     public String mediaURI;
+
+    public static ContinuousData createDummyContinuousData()
+    {
+        ContinuousData data = new ContinuousData();
+        data.id = Utilities.generateUUIDString();
+        data.sessionID = Utilities.generateUUIDString();
+        data.vehicleID = " VINREITWOIASDFN";
+        data.driverID = "B4979695";
+        data.submitterID = "Fujitsu Labs";
+
+        data.gpsTimestamp = new Timestamp(new Date().getTime());
+        data.longitude = 0.2341346;
+        data.latitude = 22.340953;
+        data.speed = 80.9;
+        data.speedDetectionType = 4;
+
+        data.accelerationTimeStamp = new Timestamp(new Date().getTime());
+        data.accelerationX = 45;
+        data.accelerationY = 3;
+        data.accelerationZ = 74;
+
+        data.gShockTimeStamp = new Timestamp(new Date().getTime());
+        data.gShockEvent = true;
+        data.gShockEventThreshold = 33;
+        data.fcwTimeStamp = new Timestamp(new Date().getTime());
+        data.fcwExistFV = true;
+        data.fcwCutIn = true;
+        data.fcwDistanceToFV = 3.3;
+        data.fcwRelativeSpeedToFV = 4.4;
+        data.fcwEvent = true;
+        data.fcwEventThreshold = 59;
+
+        data.ldwTimeStamp = new Timestamp(new Date().getTime());
+        data.ldwDistanceToLeftLane = 5.5;
+        data.ldwDistanceToRightLane = 2.2;
+        data.ldwEvent = true;
+        data.mediaURI = "some/media/uri";
+        return data;
+    }
 }
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d12 2
+d16 2
+a17 2
+    @@JsonProperty("messageID")
+    public int messageID;
+d51 2
+a52 1
+    public double gShockEventThreshold; // might be a parameter from FLA
+a76 1
+
+d79 39
 @
 
 

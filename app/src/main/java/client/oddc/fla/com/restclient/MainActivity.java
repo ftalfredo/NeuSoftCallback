@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean oddcOK = false;
 
 
-    NeuSoftSimulator nsc = new NeuSoftSimulator(); // TESTING ONLY
+    static NeuSoftSimulator nsc = new NeuSoftSimulator(); // TESTING ONLY
     static boolean cTimerRunning = false; // TESTING ONLY
     TextView msgView; // TESTING ONLY
     public static TextView dbCount; // TESTING ONLY

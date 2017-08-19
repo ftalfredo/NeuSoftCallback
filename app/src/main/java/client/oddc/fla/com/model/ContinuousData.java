@@ -5,14 +5,16 @@
 package client.oddc.fla.com.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Random;
+
+import client.oddc.fla.com.utilities.Utilities;
 
 public class ContinuousData
 {
-    @JsonProperty("messageID")
-    public int messageID;
+    @JsonProperty("id")
+    public String id;
     @JsonProperty("sessionID")
     public String sessionID;
     @JsonProperty("vehicleID")
@@ -22,8 +24,8 @@ public class ContinuousData
     @JsonProperty("submitterID")
     public String submitterID;
 
-    @JsonProperty("gpsTimestamp")
-    public Timestamp gpsTimestamp;
+    @JsonProperty("gpsTimeStamp")
+    public Timestamp gpsTimeStamp;
     @JsonProperty("longitude")
     public double longitude;
     @JsonProperty("latitude")
@@ -46,7 +48,8 @@ public class ContinuousData
     public Timestamp gShockTimeStamp;
     @JsonProperty("gShockEvent")
     public boolean gShockEvent;
-    public double gShockEventThreshold; // might be a parameter from FLA
+    @JsonProperty("gShockEventThreshold")
+    public double gShockEventThreshold;
 
     @JsonProperty("fcwTimeStamp")
     public Timestamp fcwTimeStamp;
@@ -71,7 +74,45 @@ public class ContinuousData
     public double ldwDistanceToRightLane;
     @JsonProperty("ldwEvent")
     public boolean ldwEvent;
-
     @JsonProperty("mediaURI")
     public String mediaURI;
+
+    public static ContinuousData createDummyContinuousData(String session, String vehicle, String driver, String submitter)
+    {
+        ContinuousData data = new ContinuousData();
+        data.id = Utilities.generateUUIDString();
+        data.sessionID = session;
+        data.vehicleID = vehicle;
+        data.driverID = driver;
+        data.submitterID = submitter;
+
+        data.gpsTimeStamp = new Timestamp(new Date().getTime());
+        data.longitude = Math.random() * Math.PI * 2;
+        data.latitude = Math.acos(Math.random() * 2 - 1);
+        data.speed = (double) (Math.random() * (50)) + 50;
+        data.speedDetectionType = 4;
+
+        data.accelerationTimeStamp = new Timestamp(new Date().getTime());
+        data.accelerationX = (int) (Math.random() * 10) + 1;
+        data.accelerationY = (int) (Math.random() * 10) + 1;
+        data.accelerationZ = (int) (Math.random() * 10) + 1;
+
+        data.gShockTimeStamp = new Timestamp(new Date().getTime());
+        data.gShockEvent = Math.random() < 0.5;
+        data.gShockEventThreshold = (int) (Math.random() * 10) + 1;
+        data.fcwTimeStamp = new Timestamp(new Date().getTime());
+        data.fcwExistFV = Math.random() < 0.5;
+        data.fcwCutIn = Math.random() < 0.5;
+        data.fcwDistanceToFV = (double) new Random().nextInt(2) + 3;
+        data.fcwRelativeSpeedToFV = (double) new Random().nextInt(2) + 3;
+        data.fcwEvent = Math.random() < 0.5;
+        data.fcwEventThreshold = (double) (Math.random() * (50)) + 50;
+
+        data.ldwTimeStamp = new Timestamp(new Date().getTime());
+        data.ldwDistanceToLeftLane = (double) new Random().nextInt(2) + 3;
+        data.ldwDistanceToRightLane = (double) new Random().nextInt(2) + 3;
+        data.ldwEvent = Math.random() < 0.5;
+        data.mediaURI = "some/media/uri";
+        return data;
+    }
 }

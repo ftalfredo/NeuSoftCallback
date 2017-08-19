@@ -1,10 +1,15 @@
-head	1.33;
+head	1.34;
 access;
 symbols;
 locks
-	jalfredo:1.33; strict;
+	jalfredo:1.34; strict;
 comment	@# @;
 
+
+1.34
+date	2017.08.17.23.42.24;	author jalfredo;	state Exp;
+branches;
+next	1.33;
 
 1.33
 date	2017.08.17.23.10.50;	author jalfredo;	state Exp;
@@ -176,7 +181,7 @@ desc
 @@
 
 
-1.33
+1.34
 log
 @*** empty log message ***
 @
@@ -245,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
     NeuSoftSimulator nsc = new NeuSoftSimulator(); // TESTING ONLY
     static boolean cTimerRunning = false; // TESTING ONLY
     TextView msgView; // TESTING ONLY
-    TextView dbCount; // TESTING ONLY
+    public static TextView dbCount; // TESTING ONLY
     TextView fsCount; // TESTING ONLY
 
 
@@ -371,6 +376,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+@
+
+
+1.33
+log
+@*** empty log message ***
+@
+text
+@d65 1
+a65 1
+    TextView dbCount; // TESTING ONLY
 @
 
 

@@ -1,4 +1,32 @@
-package client.oddc.fla.com.restclient;
+head	1.2;
+access;
+symbols;
+locks
+	jalfredo:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2017.08.17.23.10.50;	author jalfredo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2017.08.17.21.23.14;	author jalfredo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package client.oddc.fla.com.restclient;
 
 import java.io.File;
 import java.util.Date;
@@ -30,8 +58,6 @@ public class NeuSoftSimulator implements NeuSoftInterface {
         this.listener = listener;
     }  // for NeuSoft
 
-
-    public void sentToFLA(int param){}
     public void onFLAparam(int param){} // for NeuSoft, example only at this time, param(s) TBD
 
     public NeuSoftSimulator() {
@@ -86,7 +112,7 @@ public class NeuSoftSimulator implements NeuSoftInterface {
         cd.vehicleID = "2JOHN41JXMN109186"; // VIN
         //cd.timezone = 0;
 
-        cd.gpsTimeStamp = dateTime; // from OS not GPS
+        cd.gpsTimestamp = dateTime; // from OS not GPS
         cd.longitude = getRandomFloat();
         cd.latitude = getRandomFloat();
         cd.speed = getRandomFloat();
@@ -144,3 +170,38 @@ public class NeuSoftSimulator implements NeuSoftInterface {
 }
 
 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d3 2
+d7 3
+d16 2
+a22 1
+
+d26 2
+d45 2
+a46 2
+                if (cTimerRunning) {
+                    oddcOK = listener.onContinuousData(mkContinuousData()); // for NeuSoft to send ContinuousData to ODDC
+d56 2
+a57 2
+                if (! cTimerRunning) return;
+                if (! oddcOK) return; // fileSysCheck not OK
+d60 1
+a60 1
+                    String fname = mVideoFolder.getPath() + File.separator + currentFilename;
+d114 1
+a114 1
+        cd.mediaURI = getCurrentFilename();
+a134 5
+    // TESTING ONLY
+    public String getCurrentFilename()
+    {
+        return currentFilename;
+    }
+@

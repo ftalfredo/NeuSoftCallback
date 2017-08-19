@@ -12,7 +12,7 @@ import client.oddc.fla.com.restclient.ODDCApplication;
 
 public class JobsDAO
 {
-    DBHelper dbHelper;
+    private DBHelper dbHelper;
 
     public JobsDAO()
     {

@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -19,7 +18,6 @@ import client.oddc.fla.com.model.ODDCJob;
 import client.oddc.fla.com.model.ODDCTask;
 import client.oddc.fla.com.model.TaskType;
 import client.oddc.fla.com.restclient.ODDCApplication;
-import client.oddc.fla.com.restclient.R;
 
 /**
  * Created by yzharchuk on 8/8/2017.
@@ -27,15 +25,18 @@ import client.oddc.fla.com.restclient.R;
 
 public class DBHelper extends SQLiteOpenHelper
 {
-    private static String DATABASE_NAME = "ODDC";
+    private static String DATABASE_NAME = "C:\\FujitsuProjects\\RESTClient\\app\\src\\main\\DB\\ODDCClientDB.db";
     private static int DATABASE_VERSION = 1;
 
     public DBHelper(Context context)
     {
         super(context, DATABASE_NAME , null, DATABASE_VERSION);
         Resources resources = ODDCApplication.getResourcesStatic();
-        DATABASE_NAME = resources.getString(R.string.database_name);
-        DATABASE_VERSION = resources.getInteger(R.integer.database_version);
+       // DATABASE_NAME = resources.getString(R.string.database_name);
+       // DATABASE_VERSION = resources.getInteger(R.integer.database_version);
+
+
+
     }
 
     @Override
@@ -87,15 +88,6 @@ public class DBHelper extends SQLiteOpenHelper
             db.insert("Jobs", null, contentValues);
 
             db.setTransactionSuccessful();
-
-            String path = db.getPath();
-            String cwd = System.getProperty("user.dir");
-
-            String currentDirectory;
-            File file = new File("torba1.txt");
-            currentDirectory = file.getAbsolutePath();
-            currentDirectory = "";
-
         }
         catch (Exception e)
         {

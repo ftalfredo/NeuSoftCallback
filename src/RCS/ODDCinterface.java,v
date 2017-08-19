@@ -1,0 +1,38 @@
+head	1.1;
+access;
+symbols;
+locks
+	jalfredo:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2017.08.17.21.23.57;	author jalfredo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@package client.oddc.fla.com.restclient;
+
+import java.util.List;
+
+import client.oddc.fla.com.model.ContinuousData;
+
+
+public interface ODDCinterface {
+    public boolean onContinuousData(ContinuousData data);
+    public List<String> getContinuousLog();
+    public List<String> getEventLog();
+    public List<String> getOnDemandLog();
+    public boolean ok2Startup();
+    public boolean reqShutdown();
+}@
