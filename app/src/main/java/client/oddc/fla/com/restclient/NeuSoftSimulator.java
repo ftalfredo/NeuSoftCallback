@@ -1,17 +1,15 @@
 package client.oddc.fla.com.restclient;
 
+import android.os.Process;
+import android.util.Log;
+
 import java.io.File;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.sql.Timestamp;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-
-import android.util.Log;
-import android.os.Process;
-
-
 
 import client.oddc.fla.com.model.ContinuousData;
 
@@ -38,6 +36,8 @@ public class NeuSoftSimulator implements NeuSoftInterface {
 
         Log.d("ALFREDO THREAD ","NeusoftSimulator TID="+String.valueOf(Process.myTid()));
 
+        currentFilename = mkFileName();
+
         int fRate = 1000 / MainActivity.getFrameRate(); // TESTING ONLY
         int vRate = 60 * 1000; // TESTING ONLY
         ctimer = new Timer();
@@ -56,7 +56,7 @@ public class NeuSoftSimulator implements NeuSoftInterface {
                 boolean ok;
                 //Log.d("ALFREDO","NeusoftSimulator.vtimer oddcOK="+oddcOK);
                 if (! MainActivity.isCTimerRunning()) return;
-                if (! MainActivity.oddcOK) return; // fileSysCheck not OK
+                //if (! MainActivity.oddcOK) return; // fileSysCheck not OK
                 try {
                     currentFilename = mkFileName();
                     String fname = MainActivity.mVideoFolder.getPath() + File.separator + currentFilename;
@@ -64,17 +64,17 @@ public class NeuSoftSimulator implements NeuSoftInterface {
                     File f = new File(fname);
                     try {
                         ok = f.createNewFile();
-                        //Log.d("ALFREDO","NeusoftSimulator.vtimer "+ok+" fname="+fname);
+                        Log.d("ALFREDO NEWFILE","NeusoftSimulator.createNewFile "+ok+" "+f.toString());
                     }
                     catch(IOException ioe){Log.d("ALFREDO","NeusoftSimulator.vtimer IOException");}
                 }
                 catch (NullPointerException npe){Log.d("ALFREDO","NeusoftSimulator.vtimer NullPointerException");}
             }
-        }, 1000,1000);    /*vRate, vRate);*/
+        }, 1000,2000);    /*vRate, vRate);*/
     }
 
 
-    // TESTING ONLY
+    // TESTING ONLY   //yz there is static ContinuousData.createDummyContinuousData(). Feel free to change it for your needs.
     public ContinuousData mkContinuousData()
     {
         Timestamp dateTime = new Timestamp(new Date().getTime());
@@ -98,23 +98,23 @@ public class NeuSoftSimulator implements NeuSoftInterface {
         cd.accelerationZ = getRandomFloat();
 
         cd.gShockTimeStamp = dateTime;
-        cd.gShockEvent = false;
-        //cd.gShockEventThreshold = getRandomFloat(); /* might be a parameter from FLA */
+        cd.gShockEvent = getRandomBoolean();
+        cd.gShockEventThreshold = getRandomFloat(); /* might be a parameter from FLA */
 
         cd.fcwTimeStamp = dateTime;
         cd.fcwExistFV = getRandomBoolean();
+        cd.fcwCutIn = getRandomBoolean();
         //cd.fcwTimeToCollision = 0;
         cd.fcwDistanceToFV = getRandomFloat();
-
         cd.fcwEvent = getRandomBoolean();
         cd.fcwEventThreshold = getRandomFloat();
 
         cd.ldwTimeStamp = dateTime;
         cd.ldwDistanceToLeftLane = getRandomFloat();
         cd.ldwDistanceToRightLane = getRandomFloat();
-        cd.ldwEvent = getRandomBoolean();
+        cd.ldwEvent = 0;
         cd.mediaURI = currentFilename;
-
+Log.d("ALFREDO MKCONTDATA","currentFilename="+currentFilename);
         return cd;
     }
 

@@ -62,7 +62,7 @@ public class GetJobsRequestTask extends AsyncTask<String, Void, ArrayList<ODDCJo
     }
 }
 
-    /*********************************** Alternative class implementation ************************************************/
+/*********************************** Alternative class implementation ************************************************/
 
     /*
     public class GetJobsRequestTask extends AsyncTask<String, Void, ODDCJobCollection>

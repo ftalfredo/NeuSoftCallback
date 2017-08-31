@@ -21,12 +21,12 @@ public class JobManager
         jobs = new ArrayList<ODDCJob>();
     }
 
-    private ArrayList<ODDCJob> getJobsFromServer()
+    public ArrayList<ODDCJob> getJobsFromServer()
     {
         ArrayList<ODDCJob> jobs = restController.getJobList();
         return jobs;
     }
-    private void storeJobsIntoSQLite(ArrayList<ODDCJob> jobs)
+    public void storeJobsIntoSQLite(ArrayList<ODDCJob> jobs)
     {
         JobsDAO jobsDAO = new JobsDAO();
         jobsDAO.insertJobs(jobs);

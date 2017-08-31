@@ -5,6 +5,7 @@
 package client.oddc.fla.com.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Random;
@@ -13,17 +14,11 @@ import client.oddc.fla.com.utilities.Utilities;
 
 public class ContinuousData
 {
-    @JsonProperty("id")
-    public String id;
-    @JsonProperty("sessionID")
-    public String sessionID;
+
     @JsonProperty("vehicleID")
     public String vehicleID;
-    @JsonProperty("driverID")
-    public String driverID;
-    @JsonProperty("submitterID")
-    public String submitterID;
-
+    @JsonProperty("id")
+    public String id;
     @JsonProperty("gpsTimeStamp")
     public Timestamp gpsTimeStamp;
     @JsonProperty("longitude")
@@ -73,46 +68,217 @@ public class ContinuousData
     @JsonProperty("ldwDistanceToRightLane")
     public double ldwDistanceToRightLane;
     @JsonProperty("ldwEvent")
-    public boolean ldwEvent;
+    public int ldwEvent;
     @JsonProperty("mediaURI")
     public String mediaURI;
 
-    public static ContinuousData createDummyContinuousData(String session, String vehicle, String driver, String submitter)
-    {
-        ContinuousData data = new ContinuousData();
-        data.id = Utilities.generateUUIDString();
-        data.sessionID = session;
-        data.vehicleID = vehicle;
-        data.driverID = driver;
-        data.submitterID = submitter;
+    //yz I did not touch them
+    @JsonIgnore
+    public boolean mediaDeleted;
+    @JsonIgnore
+    public boolean mediaUploaded;
+    @JsonIgnore
+    public boolean dataUploaded;
 
-        data.gpsTimeStamp = new Timestamp(new Date().getTime());
-        data.longitude = Math.random() * Math.PI * 2;
-        data.latitude = Math.acos(Math.random() * 2 - 1);
-        data.speed = (double) (Math.random() * (50)) + 50;
-        data.speedDetectionType = 4;
 
-        data.accelerationTimeStamp = new Timestamp(new Date().getTime());
-        data.accelerationX = (int) (Math.random() * 10) + 1;
-        data.accelerationY = (int) (Math.random() * 10) + 1;
-        data.accelerationZ = (int) (Math.random() * 10) + 1;
 
-        data.gShockTimeStamp = new Timestamp(new Date().getTime());
-        data.gShockEvent = Math.random() < 0.5;
-        data.gShockEventThreshold = (int) (Math.random() * 10) + 1;
-        data.fcwTimeStamp = new Timestamp(new Date().getTime());
-        data.fcwExistFV = Math.random() < 0.5;
-        data.fcwCutIn = Math.random() < 0.5;
-        data.fcwDistanceToFV = (double) new Random().nextInt(2) + 3;
-        data.fcwRelativeSpeedToFV = (double) new Random().nextInt(2) + 3;
-        data.fcwEvent = Math.random() < 0.5;
-        data.fcwEventThreshold = (double) (Math.random() * (50)) + 50;
+    public String getId() {
+        return id;
+    }
 
-        data.ldwTimeStamp = new Timestamp(new Date().getTime());
-        data.ldwDistanceToLeftLane = (double) new Random().nextInt(2) + 3;
-        data.ldwDistanceToRightLane = (double) new Random().nextInt(2) + 3;
-        data.ldwEvent = Math.random() < 0.5;
-        data.mediaURI = "some/media/uri";
-        return data;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Timestamp getGpsTimeStamp() {
+        return gpsTimeStamp;
+    }
+
+    public void setGpsTimeStamp(Timestamp gpsTimeStamp) {
+        this.gpsTimeStamp = gpsTimeStamp;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public int getSpeedDetectionType() {
+        return speedDetectionType;
+    }
+
+    public void setSpeedDetectionType(int speedDetectionType) {
+        this.speedDetectionType = speedDetectionType;
+    }
+
+    public Timestamp getAccelerationTimeStamp() {
+        return accelerationTimeStamp;
+    }
+
+    public void setAccelerationTimeStamp(Timestamp accelerationTimeStamp) {
+        this.accelerationTimeStamp = accelerationTimeStamp;
+    }
+
+    public double getAccelerationX() {
+        return accelerationX;
+    }
+
+    public void setAccelerationX(double accelerationX) {
+        this.accelerationX = accelerationX;
+    }
+
+    public double getAccelerationY() {
+        return accelerationY;
+    }
+
+    public void setAccelerationY(double accelerationY) {
+        this.accelerationY = accelerationY;
+    }
+
+    public double getAccelerationZ() {
+        return accelerationZ;
+    }
+
+    public void setAccelerationZ(double accelerationZ) {
+        this.accelerationZ = accelerationZ;
+    }
+
+    public Timestamp getgShockTimeStamp() {
+        return gShockTimeStamp;
+    }
+
+    public void setgShockTimeStamp(Timestamp gShockTimeStamp) {
+        this.gShockTimeStamp = gShockTimeStamp;
+    }
+
+    public boolean isgShockEvent() {
+        return gShockEvent;
+    }
+
+    public void setgShockEvent(boolean gShockEvent) {
+        this.gShockEvent = gShockEvent;
+    }
+
+    public double getgShockEventThreshold() {
+        return gShockEventThreshold;
+    }
+
+    public void setgShockEventThreshold(double gShockEventThreshold) {
+        this.gShockEventThreshold = gShockEventThreshold;
+    }
+
+    public Timestamp getFcwTimeStamp() {
+        return fcwTimeStamp;
+    }
+
+    public void setFcwTimeStamp(Timestamp fcwTimeStamp) {
+        this.fcwTimeStamp = fcwTimeStamp;
+    }
+
+    public boolean isFcwExistFV() {
+        return fcwExistFV;
+    }
+
+    public void setFcwExistFV(boolean fcwExistFV) {
+        this.fcwExistFV = fcwExistFV;
+    }
+
+    public boolean isFcwCutIn() {
+        return fcwCutIn;
+    }
+
+    public void setFcwCutIn(boolean fcwCutIn) {
+        this.fcwCutIn = fcwCutIn;
+    }
+
+    public double getFcwDistanceToFV() {
+        return fcwDistanceToFV;
+    }
+
+    public void setFcwDistanceToFV(double fcwDistanceToFV) {
+        this.fcwDistanceToFV = fcwDistanceToFV;
+    }
+
+    public double getFcwRelativeSpeedToFV() {
+        return fcwRelativeSpeedToFV;
+    }
+
+    public void setFcwRelativeSpeedToFV(double fcwRelativeSpeedToFV) {
+        this.fcwRelativeSpeedToFV = fcwRelativeSpeedToFV;
+    }
+
+    public boolean isFcwEvent() {
+        return fcwEvent;
+    }
+
+    public void setFcwEvent(boolean fcwEvent) {
+        this.fcwEvent = fcwEvent;
+    }
+
+    public double getFcwEventThreshold() {
+        return fcwEventThreshold;
+    }
+
+    public void setFcwEventThreshold(double fcwEventThreshold) {
+        this.fcwEventThreshold = fcwEventThreshold;
+    }
+
+    public Timestamp getLdwTimeStamp() {
+        return ldwTimeStamp;
+    }
+
+    public void setLdwTimeStamp(Timestamp ldwTimeStamp) {
+        this.ldwTimeStamp = ldwTimeStamp;
+    }
+
+    public double getLdwDistanceToLeftLane() {
+        return ldwDistanceToLeftLane;
+    }
+
+    public void setLdwDistanceToLeftLane(double ldwDistanceToLeftLane) {
+        this.ldwDistanceToLeftLane = ldwDistanceToLeftLane;
+    }
+
+    public double getLdwDistanceToRightLane() {
+        return ldwDistanceToRightLane;
+    }
+
+    public void setLdwDistanceToRightLane(double ldwDistanceToRightLane) {
+        this.ldwDistanceToRightLane = ldwDistanceToRightLane;
+    }
+
+    public int isLdwEvent() {
+        return ldwEvent;
+    }
+
+    public void setLdwEvent(int ldwEvent) {
+        this.ldwEvent = ldwEvent;
+    }
+
+    public String getMediaURI() {
+        return mediaURI;
+    }
+
+    public void setMediaURI(String mediaURI) {
+        this.mediaURI = mediaURI;
     }
 }

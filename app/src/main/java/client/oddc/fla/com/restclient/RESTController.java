@@ -7,9 +7,10 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import client.oddc.fla.com.model.ContinuousDataCollection;
+import client.oddc.fla.com.model.DataPackage;
+import client.oddc.fla.com.model.DataPackageType;
+import client.oddc.fla.com.model.Notification;
 import client.oddc.fla.com.model.ODDCJob;
-import client.oddc.fla.com.model.VideoCollection;
 /**
  * Created by yzharchuk on 8/1/2017.
  */
@@ -47,12 +48,26 @@ public class RESTController
         return jobs;
     }
 
-    public HttpStatus postContinuousData(ContinuousDataCollection dataCollection)
+    public void postNotification(Notification notification)
     {
+        new PostNotificationTask(base_url + "notification/general").execute(notification);
+    }
+
+    public HttpStatus postDataPackage(DataPackage dataPackage)
+    {
+        String dataUrl = null;
+
+        if(dataPackage.getPackageType() == DataPackageType.CONTINUOUS)
+            dataUrl = "data/continuous";
+        else if(dataPackage.getPackageType() == DataPackageType.EVENT)
+            dataUrl = "data/event";
+        if(dataPackage.getPackageType() == DataPackageType.SELECTIVE)
+            dataUrl = "data/selective";
+
         HttpStatus status = null;
         try
         {
-            status = new PostContinuousDataTask(base_url + "data/continuous").execute(dataCollection).get();
+            status = new PostDataPackageTask(base_url + dataUrl).execute(dataPackage).get();
             int i = 0;
         }
         catch (InterruptedException e)
@@ -61,26 +76,30 @@ public class RESTController
         }
         catch (ExecutionException e)
         {
-            Log.e("Err postContinuousData",e.getMessage());
+            Log.e("Err postDataPackage",e.getMessage());
         }
-        finally
+
+        return status;
+    }
+
+    public boolean postSelectiveCheck()
+    {
+        boolean selectiveRequest = false;
+
+        try
         {
-            return status;
+            selectiveRequest = new PostSelectiveCheckTask(base_url + "ping/flag").execute().get();
+            int i = 0;
         }
-    }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ExecutionException e)
+        {
+            Log.e("Err postSelectiveCheck",e.getMessage());
+        }
 
-    public void postMediaData(VideoCollection videos)
-    {
-        new PostMediaDataTask(base_url + "data/video").execute(videos);
-    }
-
-    public void postStartEngineNotification(ArrayList<String> notification)
-    {
-        new PostNotificationTask(base_url + "notification/enginestart").execute(notification);
-    }
-
-    public void postStopEngineNotification(ArrayList<String> notification)
-    {
-        new PostNotificationTask(base_url + "notification/enginestop").execute(notification);
+        return selectiveRequest;
     }
 }

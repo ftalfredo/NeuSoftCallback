@@ -32,6 +32,9 @@ public class Video
     @JsonProperty("videoTimeStamp")
     private Timestamp videoTimeStamp;
 
+    @JsonProperty("videoBytes")
+    private byte[] videoBytes;
+
     public String getCameraId() {
         return cameraId;
     }
@@ -104,6 +107,14 @@ public class Video
         this.videoTimeStamp = videoTimeStamp;
     }
 
+    public byte[] getVideoBytes() {
+        return videoBytes;
+    }
+
+    public void setVideoBytes(byte[] videoBytes) {
+        this.videoBytes = videoBytes;
+    }
+
     public static ArrayList<Video> createDummyVideoRecords(int numRecords)
     {
         ArrayList<Video> videos = new ArrayList<Video>();
@@ -124,5 +135,22 @@ public class Video
         }
 
         return videos;
+    }
+
+    public static Video createDummyVideo(byte[] videoBytes)
+    {
+        Video video = new Video();
+        video.videoBytes = videoBytes;
+        video.videoTimeStamp = new Timestamp(new Date().getTime());
+        video.cameraId = "camera" + (new Random().nextInt(20));
+        video.fileName = "VIDEO" + (new Random().nextInt(100)) + "_" + video.videoTimeStamp + ".mp4";
+        video.size = videoBytes.length;
+        video.videoResolution = 1080;
+        video.frameRate = 24;
+        video.codec = "K-LITE";
+        video.direction = "F";
+        video.FOV = "FOV Scene " + (new Random().nextInt(20));
+
+        return video;
     }
 }
