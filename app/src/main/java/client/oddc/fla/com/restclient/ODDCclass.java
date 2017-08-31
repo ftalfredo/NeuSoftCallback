@@ -299,8 +299,7 @@ public class ODDCclass implements ODDCinterface {
 
         Log.d("ALFREDO CHECKFILESPACE","MIN_AVAIL_FS="+String.valueOf(MIN_AVAIL_FS)+" availSpace="+String.valueOf(availSpace));
 
-        //if (availSpace > MIN_AVAIL_FS) return availSpace;
-        if (1 == 2) return 2;
+        if (availSpace > MIN_AVAIL_FS) return availSpace;
         else  {
             String[] columns = new String[]{DBschema.GPS_TS,DBschema.GS_E,DBschema.FCW_E,DBschema.FCW_CI,DBschema.LDW_E,DBschema.M_URI,DBschema.M_D,DBschema.M_U};
             String selection = new String("MediaURI NOT IN ( select MediaURI from oddc where GShockEvent = 1 or FCWEvent = 1 or LDWEvent = 1 or MediaDeleted = 1)");
@@ -412,10 +411,6 @@ public class ODDCclass implements ODDCinterface {
                 }
                 c.close();
 
-                //ContinuousDataCollection wrapper = new ContinuousDataCollection();  //yz
-                //wrapper.setContinuousData(dataCollection);
-                //status = controller.postContinuousData(wrapper);
-
                 DataPackage dataPackage = new DataPackage(); //yz
                 dataPackage.setContinuousData(dataCollection); //yz
                 dataPackage.setPackageType(ptype);
@@ -426,6 +421,7 @@ public class ODDCclass implements ODDCinterface {
                         ArrayList<Video> videos = new ArrayList<Video>();
                         videos.add(Video.createDummyVideo(vData));
                         dataPackage.setVideos(videos);
+                        Log.d("ALFREDO","SendToFLA EVENT upload "+eventList.get(0));
                     }
                     catch (IOException ioe){
                         Log.e("ALFREDO","IOException FileUtils.readFileToByteArray "+eventList.get(0));
@@ -444,7 +440,7 @@ public class ODDCclass implements ODDCinterface {
                         String sqlStmt = "update oddc set DataUploaded = 1 where rowid in ( select rowid from oddc where rowid % "+String.valueOf(SAMPLE_FREQ)+" = 0 and DataUploaded = 0 limit "+String.valueOf(SENDCOUNT)+" )";
                         db.execSQL(sqlStmt);
                         if (ptype == DataPackageType.EVENT) eventList.remove(0);
-                        Log.d("ALFREDO","SendToFLA tid="+Thread.currentThread().getId()+" Cursor.nrows="+nrows+" HttpStatus="+status+" DataPackageType="+ptype);
+                        Log.d("ALFREDO","SendToFLA DataPackageType="+ptype);
                 	}
                 }
             }
