@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean oddcOK = false;
 
 
-    static NeuSoftSimulator nsc = new NeuSoftSimulator(); // TESTING ONLY
+    static NeusoftHandler nsc = new NeusoftHandler(); // TESTING ONLY
     static boolean cTimerRunning = false; // TESTING ONLY
     TextView msgView; // TESTING ONLY
     public static TextView dbCount; // TESTING ONLY
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         if (pbl != null) {
             if (pbl.size() > 0) {
                 for (int i = 0; i < pbl.size(); i++) {
-                    Log.d("ALFREDO ONPBLIST", "onPBlist " + pbl.get(i).MediaURI + " " + pbl.get(i).GShockEvent + " " + pbl.get(i).FCWEvent + " " + pbl.get(i).LDWEvent);
+                    Log.d("ODDC ONPBLIST", "onPBlist " + pbl.get(i).MediaURI + " " + pbl.get(i).GShockEvent + " " + pbl.get(i).FCWEvent + " " + pbl.get(i).LDWEvent);
                 }
             }
         }
@@ -103,15 +103,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void onCopy(View view){
         File currentDB = mContext.getDatabasePath(DATABASE_NAME);
-        Log.d("ALFREDO ONCOPY","currentDB="+currentDB.toString());
+        Log.d("ODDC ONCOPY","currentDB="+currentDB.toString());
 
         boolean copyIN = ( view.getId() == R.id.btnCopyIN ) ? true : false;
 
 
-        Log.d("ALFREDO ONCOPY","copyIN="+copyIN);
+        Log.d("ODDC ONCOPY","copyIN="+copyIN);
 
         File md = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
-        Log.d("ALFREDO ONCOPY","MainActivity getExternalStoragePublicDirectory.DIRECTORY_MOVIES="+md.toString()+" canWrite="+md.canWrite());
+        Log.d("ODDC ONCOPY","MainActivity getExternalStoragePublicDirectory.DIRECTORY_MOVIES="+md.toString()+" canWrite="+md.canWrite());
 
         File backupDB = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES),"backup.db");
 
@@ -129,13 +129,13 @@ public class MainActivity extends AppCompatActivity {
             dst.transferFrom(src, 0, src.size());
             src.close();
             dst.close();
-            Log.d("ALFREDO ONCOPY","transferFrom ");
+            Log.d("ODDC ONCOPY","transferFrom ");
         }
         catch (FileNotFoundException fnfe){
-            Log.e("ALFREDO ERR","FileNotFoundException"+fnfe.toString());
+            Log.e("ODDC ERR","FileNotFoundException"+fnfe.toString());
         }
         catch (IOException ioe){
-            Log.e("ALFREDO ERR","IOException"+ioe.toString());
+            Log.e("ODDC ERR","IOException"+ioe.toString());
         }
     }
 
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> vidFiles = new ArrayList<String>();
             for (File f : vFiles) {
                 vidFiles.add(f.getPath());
-                Log.d("ALFREDO VIEWFILES","f="+f.toString());
+                Log.d("ODDC VIEWFILES","f="+f.toString());
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.fslistview_layout, vidFiles);
             ListView fsview = (ListView) findViewById(R.id.fslistView);
@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.ldwEventVal
         };
         String omsg = oddc == null ? "oddc=NULL" : "oddc=NOT NULL";
-        Log.d("ALFREDO","onViewDB "+omsg);
+        Log.d("ODDC","onViewDB "+omsg);
         if (oddc.db != null){
 
             Cursor cursor = oddc.db.query(
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
             ListView listview = (ListView) findViewById(R.id.dblistView);
             listview.setAdapter(dataAdapter);
 
-            Log.d("ALFREDO","onViewDB rowCount="+cursor.getCount());
+            Log.d("ODDC","onViewDB rowCount="+cursor.getCount());
             //cursor.close();
         }
     }
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
     // If NeuSoft creates folder, please set mVideoFolder to location
     private void createVideoFolder() {
         mVideoFolder = mContext.getDir("oddc", Context.MODE_PRIVATE); //Creating an internal dir;
-        Log.d("ALFREDO CREATEVIDFILDER","mVideoFolder="+mVideoFolder.toString());
+        Log.d("ODDC CREATEVIDFILDER","mVideoFolder="+mVideoFolder.toString());
     }
 
 }

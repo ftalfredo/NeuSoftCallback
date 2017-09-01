@@ -21,23 +21,32 @@
             android:layout_height="wrap_content"
             android:text="" />
         <TextView
-            android:id="@+id/duLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DU: "/>
-        <TextView
-            android:id="@+id/duVal"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
             android:id="@+id/mdLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="MD: "/>
         <TextView
             android:id="@+id/mdVal"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+        <TextView
+            android:id="@+id/duLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MU: "/>
+        <TextView
+            android:id="@+id/muVal"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+        <TextView
+            android:id="@+id/duLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DU: "/>
+        <TextView
+            android:id="@+id/duVal"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="" />
@@ -73,6 +82,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" />
-    </LinearLayout>
 
+        <TextView
+            android:id="@+id/gsEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="140dp"
+            android:text="GS:" />
+        <TextView
+            android:id="@+id/gsEventVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/fcwEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:text="FCW:" />
+        <TextView
+            android:id="@+id/fcwEventVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/ldwEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:text="LDW:" />
+        <TextView
+            android:id="@+id/ldwEventVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="" />
+    </LinearLayout>
 </LinearLayout>

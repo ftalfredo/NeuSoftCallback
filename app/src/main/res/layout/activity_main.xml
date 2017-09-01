@@ -31,6 +31,18 @@
             android:layout_height="wrap_content"
             android:onClick="onStop"
             android:text="STOP" />
+        <Button
+            android:id="@+id/btnCopyIN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onCopy"
+            android:text="COPY IN" />
+        <Button
+            android:id="@+id/btnCopyOUT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onCopy"
+            android:text="COPY OUT" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -56,7 +68,8 @@
             android:layout_height="match_parent"
             android:textSize="24sp"
             android:text=""
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_weight="0.87" />
 
     </LinearLayout>
 
@@ -108,6 +121,13 @@
             android:onClick="onDelete"
             android:text="DELETE"
             android:visibility="visible" />
+        <Button
+            android:id="@+id/btnPBlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onPBlist"
+            android:text="PB LIST"
+            android:visibility="visible" />
     </LinearLayout>
 
     <TextView
@@ -122,7 +142,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.40" />
-
     <ListView
         android:id="@+id/dblistView"
         android:layout_width="match_parent"

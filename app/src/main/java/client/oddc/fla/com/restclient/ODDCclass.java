@@ -55,7 +55,7 @@ public class ODDCclass implements ODDCinterface {
     SQLiteDatabase db = null;
     TimeZone tz;
 
-    private NeuSoftSimulator listener;
+    private NeusoftHandler listener;
     private int loopCount = 0;
 
     public ODDCclass(String url, Context context, File folder){
@@ -68,11 +68,11 @@ public class ODDCclass implements ODDCinterface {
         FRAMES_PER_MIN = MainActivity.getFrameRate() * 60;
         SENDCOUNT = FRAMES_PER_MIN / SAMPLE_FREQ;
 
-        Log.d("ALFREDO THREAD ","ODDCclass TID="+String.valueOf(Process.myTid()));
+        Log.d("ODDC THREAD ","ODDCclass TID="+String.valueOf(Process.myTid()));
     }
 
 
-    public void setListener(NeuSoftSimulator listener){
+    public void setListener(NeusoftHandler listener){
         this.listener = listener;
     }
 
@@ -90,11 +90,11 @@ public class ODDCclass implements ODDCinterface {
 
 
         // code above is for testing, code below is for production
-        Log.d("ALFREDO","ok2Startup mContext="+this.mContext);
+        Log.d("ODDC","ok2Startup mContext="+this.mContext);
         dbh = new ODDCdbHelper(this.mContext);
-        Log.d("ALFREDO","ok2Startup dbh="+dbh);
+        Log.d("ODDC","ok2Startup dbh="+dbh);
         db = dbh.getWritableDatabase();
-        Log.d("ALFREDO","ODDCclass.ok2Startup db = dbh.getWritableDatabase");
+        Log.d("ODDC","ODDCclass.ok2Startup db = dbh.getWritableDatabase");
 
         //jobList = controller.getJobList();
 
@@ -120,12 +120,12 @@ public class ODDCclass implements ODDCinterface {
 
         public ODDCdbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
-            Log.d("ALFREDO","ODDCdbHelper.ODDCdbHelper");
+            Log.d("ODDC","ODDCdbHelper.ODDCdbHelper");
         }
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(SQL_DROP_TABLE);
             db.execSQL(SQL_CREATE_TABLE);
-            Log.d("ALFREDO","ODDCdbHelper.onCreate SQL_CREATE_TABLE="+SQL_CREATE_TABLE);
+            Log.d("ODDC","ODDCdbHelper.onCreate SQL_CREATE_TABLE="+SQL_CREATE_TABLE);
         }
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL(SQL_DROP_TABLE);
@@ -146,7 +146,7 @@ public class ODDCclass implements ODDCinterface {
     public ArrayList<PlaybackList> getPlaybackList(){
         Cursor c = db.rawQuery("select MediaURI,sum(GShockEvent),sum(FCWEvent),sum(LDWEvent),MediaDeleted from oddc where MediaURI not in ( select MediaURI from oddc where  MediaDeleted = 1 ) group by MediaURI having ( sum(GShockEvent) > 0 or sum(FCWEvent) > 0 or sum(LDWEvent) > 0 )",null);
         int nrows = c.getCount();
-        Log.d("ALFREDO GETPBLIST", "Cursor.nrows="+nrows);
+        Log.d("ODDC GETPBLIST", "Cursor.nrows="+nrows);
         if (nrows > 0) {
             ArrayList<PlaybackList> pbList = new ArrayList<PlaybackList>();
             while (c.moveToNext()) {
@@ -228,7 +228,7 @@ public class ODDCclass implements ODDCinterface {
     private static final String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + DBschema.TABLE_NAME;
 
 
-    public boolean insertSQLite(ContinuousData data){
+    public boolean insertSQLite(final ContinuousData data){
         ContentValues values = new ContentValues();
         values.put(DBschema.VIN, data.vehicleID);
         //values.put(DBschema.TZ, tz.getRawOffset()); /* milliseconds */
@@ -269,7 +269,7 @@ public class ODDCclass implements ODDCinterface {
         values.put(DBschema.D_U, false);
 
         long rid = db.insert(DBschema.TABLE_NAME, null, values);
-        Log.d("ALFREDO INSERTSQL","mediaURI="+values.get(DBschema.M_URI));
+        Log.d("ODDC INSERTSQL","VIN="+values.get(DBschema.VIN)+" mediaURI="+values.get(DBschema.M_URI));
 
         if (currentVideoFile == "NA") currentVideoFile = data.mediaURI;
         if (currentVideoFile != data.mediaURI){
@@ -288,8 +288,8 @@ public class ODDCclass implements ODDCinterface {
         MainActivity.dbCount.post(new Runnable() {
             public void run() {
                 final int cnt = getRowCount();
-                String dbt = "DB rowCount="+String.valueOf(cnt);
-                Log.d("ALFREDO","MainActivity.insertSQLite "+dbt);
+                String dbt = "DB rowCount="+String.valueOf(cnt)+" VIN:"+data.vehicleID;
+                Log.d("ODDC","MainActivity.insertSQLite "+dbt);
                 MainActivity.dbCount.setText(dbt);
             }
         });
@@ -301,7 +301,7 @@ public class ODDCclass implements ODDCinterface {
     public long checkFileSpace(){
         long availSpace = mVideoFolder.getUsableSpace();
 
-        Log.d("ALFREDO CHECKFILESPACE","MIN_AVAIL_FS="+String.valueOf(MIN_AVAIL_FS)+" availSpace="+String.valueOf(availSpace));
+        Log.d("ODDC CHECKFILESPACE","MIN_AVAIL_FS="+String.valueOf(MIN_AVAIL_FS)+" availSpace="+String.valueOf(availSpace));
 
         if (availSpace > MIN_AVAIL_FS) return availSpace;
         else  {
@@ -319,20 +319,20 @@ public class ODDCclass implements ODDCinterface {
                     limit);
 
             int nrows = c.getCount();
-            Log.d("ALFREDO CHECKFILESPACE", "Cursor.nrows="+nrows);
+            Log.d("ODDC CHECKFILESPACE", "Cursor.nrows="+nrows);
             if (nrows > 0) {
                 int i = 0;
                 while (c.moveToNext()) {
                     String fname = c.getString(5);
                     File f = new File(mVideoFolder.getAbsolutePath() + File.separatorChar + fname);
-                    Log.d("ALFREDO CHECKFILESPACE","f="+f.toString()+" f.exists="+f.exists());
+                    Log.d("ODDC CHECKFILESPACE","f="+f.toString()+" f.exists="+f.exists());
                     if (f.exists()) {
                         f.delete();
-                        Log.d("ALFREDO CHECKFILESPACE","file DELETED "+f.toString());
+                        Log.d("ODDC CHECKFILESPACE","file DELETED "+f.toString());
                         String sqlStmt = "update oddc set MediaDeleted = 1 where MediaURI = \'"+fname+"\' ";
                         db.execSQL(sqlStmt);
                     }
-                    Log.d("ALFREDO CHECKFILESPACE", c.getString(0) + " GS_E="+c.getInt(1)+" FCW_E="+c.getInt(2)+" FCW_CI="+c.getInt(3)+" LDW_E="+c.getInt(4)+" MediaURI=" + c.getString(5) + " MediaDeleted=" + c.getInt(6) + " MediaUploaded=" + c.getInt(7));
+                    Log.d("ODDC CHECKFILESPACE", c.getString(0) + " GS_E="+c.getInt(1)+" FCW_E="+c.getInt(2)+" FCW_CI="+c.getInt(3)+" LDW_E="+c.getInt(4)+" MediaURI=" + c.getString(5) + " MediaDeleted=" + c.getInt(6) + " MediaUploaded=" + c.getInt(7));
                 }
                 c.close();
             }
@@ -351,7 +351,8 @@ public class ODDCclass implements ODDCinterface {
             String selection;
             String[] selectionArgs;
             HttpStatus status = HttpStatus.I_AM_A_TEAPOT;
-            String[] columns = new String[]{DBschema.FCW_DFV,DBschema.GPS_TS,DBschema.GPS_LON,DBschema.GPS_LAT,
+            String[] columns = new String[]{
+                    DBschema.VIN,DBschema.GPS_TS,DBschema.GPS_LON,DBschema.GPS_LAT,
                     DBschema.SPEED,DBschema.SPEED_DT,
                     DBschema.ACC_TS,DBschema.ACC_X,DBschema.ACC_Y,DBschema.ACC_Z,
                     DBschema.GS_TS,DBschema.GS_E,DBschema.GS_ET,
@@ -397,7 +398,7 @@ public class ODDCclass implements ODDCinterface {
                     cd.gShockEvent = ( c.getInt(11) != 0 );
                     cd.gShockEventThreshold = c.getDouble(12);
                     cd.fcwTimeStamp = Timestamp.valueOf(c.getString(13));
-                    cd.fcwEvent = ( c.getInt(14) != 0 );
+                    cd.fcwExistFV = ( c.getInt(14) != 0 );
                     cd.fcwCutIn = ( c.getInt(15) != 0 );
                     cd.fcwDistanceToFV = c.getFloat(16);
                     cd.fcwEvent = ( c.getInt(17) != 0 );
@@ -411,6 +412,11 @@ public class ODDCclass implements ODDCinterface {
                     cd.mediaUploaded = ( c.getInt(25) != 0 );
                     cd.dataUploaded = ( c.getInt(26) != 0 );
                     dataCollection.add(cd);
+
+                    // TESTING
+                    String dpt = (ptype == DataPackageType.CONTINUOUS) ? "CONTINUOUS upload " : "EVENT upload ";
+                    Log.d("ODDC","SendToFLA "+dpt+ cd.vehicleID +" gpsTS:"+cd.gpsTimeStamp+" LON:"+cd.longitude+" LAT:"+cd.latitude+" SPD:"+cd.speed+" GSe:"+cd.gShockEvent+" FCWefv:"+cd.fcwExistFV+" FCWe:"+cd.fcwEvent+
+                            " LDWe:"+cd.ldwEvent+" LDWdll:"+cd.ldwDistanceToLeftLane+" LDWDrl:"+cd.ldwDistanceToRightLane+" LDWe:"+cd.ldwEvent+" mURI:"+cd.mediaURI+" mD:"+cd.mediaDeleted+" mU:"+cd.mediaUploaded+" dU:"+cd.dataUploaded);
                 }
                 c.close();
 
@@ -424,19 +430,19 @@ public class ODDCclass implements ODDCinterface {
                         ArrayList<Video> videos = new ArrayList<Video>();
                         videos.add(Video.createDummyVideo(vData));
                         dataPackage.setVideos(videos);
-                        Log.d("ALFREDO","SendToFLA EVENT upload "+eventList.get(0));
+                        Log.d("ODDC","SendToFLA EVENT VIDEO upload "+eventList.get(0));
                     }
                     catch (IOException ioe){
-                        Log.e("ALFREDO","IOException FileUtils.readFileToByteArray "+eventList.get(0));
+                        Log.e("ODDC","IOException FileUtils.readFileToByteArray "+eventList.get(0));
                         return;
                     }
                 }
                 status = controller.postDataPackage(dataPackage); //yz
-                if (status == null) MainActivity.nsc.sentToFLA(-1);
+                if (status == null) listener.sentToFLA(-1);
                 else {
                     if (status != HttpStatus.OK) {
-                        MainActivity.nsc.sentToFLA(-1);
-                        Log.e("ALFREDO ERR","SendToFLA HttpStatus NOT OK");
+                        listener.sentToFLA(-1);
+                        Log.e("ODDC ERR","SendToFLA HttpStatus NOT OK");
                     }
                     else {
                         String sqlStmt;

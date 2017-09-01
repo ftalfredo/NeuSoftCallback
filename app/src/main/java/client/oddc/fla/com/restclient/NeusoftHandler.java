@@ -14,7 +14,7 @@ import java.util.TimerTask;
 import client.oddc.fla.com.model.ContinuousData;
 
 
-public class NeuSoftSimulator implements NeuSoftInterface {
+public class NeusoftHandler implements NeuSoftInterface {
     private ODDCclass listener;
 
 
@@ -32,9 +32,9 @@ public class NeuSoftSimulator implements NeuSoftInterface {
     public void sentToFLA(int param){}
     public void onFLAparam(int param){} // for NeuSoft, example only at this time, param(s) TBD
 
-    public NeuSoftSimulator() {
+    public NeusoftHandler() {
 
-        Log.d("ALFREDO THREAD ","NeusoftSimulator TID="+String.valueOf(Process.myTid()));
+        Log.d("ODDC THREAD ","NeusoftSimulator TID="+String.valueOf(Process.myTid()));
 
         currentFilename = mkFileName();
 
@@ -43,7 +43,7 @@ public class NeuSoftSimulator implements NeuSoftInterface {
         ctimer = new Timer();
         ctimer.scheduleAtFixedRate(new TimerTask(){
             public void run(){
-                //Log.d("ALFREDO","NeusoftSimulator.ctimer");
+                //Log.d("ODDC","NeusoftSimulator.ctimer");
                 if ( MainActivity.isCTimerRunning()) {
                     MainActivity.oddcOK = listener.onContinuousData(mkContinuousData()); // for NeuSoft to send ContinuousData to ODDC
                 }
@@ -54,7 +54,7 @@ public class NeuSoftSimulator implements NeuSoftInterface {
         vtimer.scheduleAtFixedRate(new TimerTask(){ /* for testing only */
             public void run(){
                 boolean ok;
-                //Log.d("ALFREDO","NeusoftSimulator.vtimer oddcOK="+oddcOK);
+                //Log.d("ODDC","NeusoftSimulator.vtimer oddcOK="+oddcOK);
                 if (! MainActivity.isCTimerRunning()) return;
                 //if (! MainActivity.oddcOK) return; // fileSysCheck not OK
                 try {
@@ -64,11 +64,11 @@ public class NeuSoftSimulator implements NeuSoftInterface {
                     File f = new File(fname);
                     try {
                         ok = f.createNewFile();
-                        Log.d("ALFREDO NEWFILE","NeusoftSimulator.createNewFile "+ok+" "+f.toString());
+                        Log.d("ODDC NEWFILE","NeusoftSimulator.createNewFile "+ok+" "+f.toString());
                     }
-                    catch(IOException ioe){Log.d("ALFREDO","NeusoftSimulator.vtimer IOException");}
+                    catch(IOException ioe){Log.d("ODDC","NeusoftSimulator.vtimer IOException");}
                 }
-                catch (NullPointerException npe){Log.d("ALFREDO","NeusoftSimulator.vtimer NullPointerException");}
+                catch (NullPointerException npe){Log.d("ODDC","NeusoftSimulator.vtimer NullPointerException");}
             }
         }, 1000,2000);    /*vRate, vRate);*/
     }
@@ -87,8 +87,8 @@ public class NeuSoftSimulator implements NeuSoftInterface {
         //cd.timezone = 0;
 
         cd.gpsTimeStamp = dateTime; // from OS not GPS
-        cd.longitude = getRandomFloat();
-        cd.latitude = getRandomFloat();
+        cd.longitude = -118.15;
+        cd.latitude = 34.03;
         cd.speed = getRandomFloat();
         cd.speedDetectionType = 0;
 
@@ -114,7 +114,7 @@ public class NeuSoftSimulator implements NeuSoftInterface {
         cd.ldwDistanceToRightLane = getRandomFloat();
         cd.ldwEvent = getRandomInt() % 3;
         cd.mediaURI = currentFilename;
-Log.d("ALFREDO MKCONTDATA","currentFilename="+currentFilename);
+Log.d("ODDC MKCONTDATA","currentFilename="+currentFilename+" vehicleID="+cd.vehicleID);
         return cd;
     }
 
@@ -146,9 +146,6 @@ Log.d("ALFREDO MKCONTDATA","currentFilename="+currentFilename);
         Date date = new Date();
         return dateFormat.format(date)+".mp4";
     }
-
-
-
 }
 
 

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.example.jalfredo.oddccallback"
+        applicationId "com.fla.oddc.client"
         minSdkVersion 25
         targetSdkVersion 25
         versionCode 1
@@ -40,7 +40,7 @@ dependencies {
     compile fileTree(dir: 'libs', includes: ['*.jar'])
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
-
+    compile 'org.apache.commons:commons-io:1.3.2'
 }
 
 
