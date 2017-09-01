@@ -1,54 +1,33 @@
 package client.oddc.fla.com.restclient;
 
-import android.icu.util.TimeZone;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-
-import android.os.Environment;
-import android.content.Context;
-
-import android.provider.BaseColumns;
-import android.content.ContentValues;
-import android.database.Cursor;
 import android.widget.SimpleCursorAdapter;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.database.DatabaseUtils;
-
-
-import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.ArrayList;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-
-import java.util.Date;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-
 import android.widget.TextView;
 
-import client.oddc.fla.com.model.ContinuousData;
-import client.oddc.fla.com.model.ContinuousDataCollection;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+
 import client.oddc.fla.com.model.ODDCJob;
-import client.oddc.fla.com.restclient.ODDCclass;
-import client.oddc.fla.com.restclient.NeuSoftSimulator;
 
 
 public class MainActivity extends AppCompatActivity {
     public static Context mContext;
     public static final String DATABASE_NAME = "oddc.db";
 
-    public static int frameRate = 30; // for NeuSoft set value somewhere for getFrameRate()
+    public static int frameRate = 2; // for NeuSoft set value somewhere for getFrameRate()
     public static int getFrameRate(){return frameRate;}
 
 
@@ -76,17 +55,18 @@ public class MainActivity extends AppCompatActivity {
         msgView = (TextView) findViewById(R.id.msgView); // TESTing ONLY
         fsCount = (TextView) findViewById(R.id.fsCount); // TESTing ONLY
 
-
-        oddc = new ODDCclass();
         mContext = getApplicationContext();
+        createVideoFolder(); // for NeuSoft is this needed?
+
+        oddc = new ODDCclass(baseUrl,mContext,mVideoFolder);
         nsc.setListener(oddc);
         oddc.setListener(nsc);
-        createVideoFolder(); // for NeuSoft is this needed?
+
         oddcOK = oddc.ok2Startup();
     }
 
-    public static String getBaseUrl(){return baseUrl;}
-    public static File getVideoFolder(){return mVideoFolder;}
+    //public static String getBaseUrl(){return baseUrl;}
+    //public static File getVideoFolder(){return mVideoFolder;}
     public static boolean isCTimerRunning(){return cTimerRunning;} // TESTING ONLY
 
 
@@ -99,11 +79,63 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    // TESTING ONLY
+    public void onPBlist(View view) {
+        ArrayList<PlaybackList> pbl = oddc.getPlaybackList();
+        if (pbl != null) {
+            if (pbl.size() > 0) {
+                for (int i = 0; i < pbl.size(); i++) {
+                    Log.d("ALFREDO ONPBLIST", "onPBlist " + pbl.get(i).MediaURI + " " + pbl.get(i).GShockEvent + " " + pbl.get(i).FCWEvent + " " + pbl.get(i).LDWEvent);
+                }
+            }
+        }
+    }
+
+
     // TESTING ONLY
     public void onCheckFS(View view) {
         File[] vFiles = mVideoFolder.listFiles();
         if (vFiles != null) {
-            fsCount.setText(String.valueOf(vFiles.length));
+            fsCount.setText(String.valueOf(vFiles.length)+" files");
+        }
+    }
+
+    public void onCopy(View view){
+        File currentDB = mContext.getDatabasePath(DATABASE_NAME);
+        Log.d("ALFREDO ONCOPY","currentDB="+currentDB.toString());
+
+        boolean copyIN = ( view.getId() == R.id.btnCopyIN ) ? true : false;
+
+
+        Log.d("ALFREDO ONCOPY","copyIN="+copyIN);
+
+        File md = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+        Log.d("ALFREDO ONCOPY","MainActivity getExternalStoragePublicDirectory.DIRECTORY_MOVIES="+md.toString()+" canWrite="+md.canWrite());
+
+        File backupDB = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES),"backup.db");
+
+        try {
+            FileChannel src;
+            FileChannel dst;
+            if (copyIN){
+                src = new FileInputStream(backupDB).getChannel();
+                dst = new FileOutputStream(currentDB).getChannel();
+            }
+            else {
+                src = new FileInputStream(currentDB).getChannel();
+                dst = new FileOutputStream(backupDB).getChannel();
+            }
+            dst.transferFrom(src, 0, src.size());
+            src.close();
+            dst.close();
+            Log.d("ALFREDO ONCOPY","transferFrom ");
+        }
+        catch (FileNotFoundException fnfe){
+            Log.e("ALFREDO ERR","FileNotFoundException"+fnfe.toString());
+        }
+        catch (IOException ioe){
+            Log.e("ALFREDO ERR","IOException"+ioe.toString());
         }
     }
 
@@ -114,10 +146,13 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> vidFiles = new ArrayList<String>();
             for (File f : vFiles) {
                 vidFiles.add(f.getPath());
+                Log.d("ALFREDO VIEWFILES","f="+f.toString());
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.fslistview_layout, vidFiles);
             ListView fsview = (ListView) findViewById(R.id.fslistView);
             fsview.setAdapter(adapter);
+
+            oddc.checkFileSpace();
         }
     }
 
@@ -144,22 +179,29 @@ public class MainActivity extends AppCompatActivity {
         String[] caFrom = {
                 DBschema._ID,
                 DBschema.GPS_TS,
-                DBschema.D_U,
                 DBschema.M_D,
-                DBschema.M_URI
+                DBschema.M_U,
+                DBschema.D_U,
+                DBschema.M_URI,
+                DBschema.GS_E,
+                DBschema.FCW_E,
+                DBschema.LDW_E
         };
         int[] caTo = new int[]{
                 R.id.rowVal,
                 R.id.gpsTSval,
-                R.id.duVal,
                 R.id.mdVal,
-                R.id.mediaURI
+                R.id.muVal,
+                R.id.duVal,
+                R.id.mediaURI,
+                R.id.gsEventVal,
+                R.id.fcwEventVal,
+                R.id.ldwEventVal
         };
         String omsg = oddc == null ? "oddc=NULL" : "oddc=NOT NULL";
         Log.d("ALFREDO","onViewDB "+omsg);
         if (oddc.db != null){
-            String dmsg = oddc.db == null ? "oddc.db=NULL" : "oddc.db=NOT NULL";
-            Log.d("ALFREDO","onViewDB oddc="+omsg+" "+dmsg);
+
             Cursor cursor = oddc.db.query(
                     DBschema.TABLE_NAME,
                     caFrom,
@@ -177,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
                     0);
             ListView listview = (ListView) findViewById(R.id.dblistView);
             listview.setAdapter(dataAdapter);
+
+            Log.d("ALFREDO","onViewDB rowCount="+cursor.getCount());
             //cursor.close();
         }
     }
@@ -184,7 +228,8 @@ public class MainActivity extends AppCompatActivity {
 
     // If NeuSoft creates folder, please set mVideoFolder to location
     private void createVideoFolder() {
-        mVideoFolder = mContext.getDir("FLA", Context.MODE_PRIVATE); //Creating an internal dir;
+        mVideoFolder = mContext.getDir("oddc", Context.MODE_PRIVATE); //Creating an internal dir;
+        Log.d("ALFREDO CREATEVIDFILDER","mVideoFolder="+mVideoFolder.toString());
     }
 
 }

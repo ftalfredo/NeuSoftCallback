@@ -36,17 +36,19 @@ public class ODDCclass implements ODDCinterface {
 
     RESTController controller;
     ArrayList<ODDCJob> jobList;
+    ArrayList<String> eventList;
 
 
     String DATABASE_NAME = "oddc.db";
 
     int MIN_AVAIL_FS = 1024 * 1024 * 1024;
-    int SAMPLE_FREQ = 30; // ALFREDO parameter from SLA?
+    int SAMPLE_FREQ = 30;
     int FRAMES_PER_MIN;
     int SENDCOUNT;
 
-    ArrayList<String> eventList;
-    String currentVideoFile;
+
+
+    String currentVideoFile = "NA";
 
 
     ODDCdbHelper dbh = null;
@@ -60,6 +62,8 @@ public class ODDCclass implements ODDCinterface {
         this.mContext = context;
         this.mVideoFolder = folder;
         this.baseUrl = url;
+        eventList = new ArrayList<String>();
+        jobList = new ArrayList<ODDCJob>();
 
         FRAMES_PER_MIN = MainActivity.getFrameRate() * 60;
         SENDCOUNT = FRAMES_PER_MIN / SAMPLE_FREQ;
@@ -68,8 +72,6 @@ public class ODDCclass implements ODDCinterface {
     }
 
 
-
-    // for NeuSoft, need to know name of NeuSoft listener class
     public void setListener(NeuSoftSimulator listener){
         this.listener = listener;
     }
@@ -94,7 +96,7 @@ public class ODDCclass implements ODDCinterface {
         db = dbh.getWritableDatabase();
         Log.d("ALFREDO","ODDCclass.ok2Startup db = dbh.getWritableDatabase");
 
-        jobList = controller.getJobList();
+        //jobList = controller.getJobList();
 
         long fsStat = checkFileSpace();
         return fsStat == -1 ? false : true;
@@ -269,6 +271,7 @@ public class ODDCclass implements ODDCinterface {
         long rid = db.insert(DBschema.TABLE_NAME, null, values);
         Log.d("ALFREDO INSERTSQL","mediaURI="+values.get(DBschema.M_URI));
 
+        if (currentVideoFile == "NA") currentVideoFile = data.mediaURI;
         if (currentVideoFile != data.mediaURI){
             SendToFLA fla = new SendToFLA(DataPackageType.EVENT);
             fla.start();
@@ -283,12 +286,11 @@ public class ODDCclass implements ODDCinterface {
         MainActivity.dbCount.post(new Runnable() {
             public void run() {
                 final int cnt = getRowCount();
-                //Log.d("ALFREDO","MainActivity.insertSQLite "+String.valueOf(cnt));
                 String dbt = "DB rowCount="+String.valueOf(cnt);
+                Log.d("ALFREDO","MainActivity.insertSQLite "+dbt);
                 MainActivity.dbCount.setText(dbt);
             }
         });
-
         return  true;
     }
 
@@ -324,7 +326,6 @@ public class ODDCclass implements ODDCinterface {
                     Log.d("ALFREDO CHECKFILESPACE","f="+f.toString()+" f.exists="+f.exists());
                     if (f.exists()) {
                         f.delete();
-
                         Log.d("ALFREDO CHECKFILESPACE","file DELETED "+f.toString());
                         String sqlStmt = "update oddc set MediaDeleted = 1 where MediaURI = \'"+fname+"\' ";
                         db.execSQL(sqlStmt);
@@ -360,7 +361,7 @@ public class ODDCclass implements ODDCinterface {
                 selectionArgs = new String[]{String.valueOf(SAMPLE_FREQ), String.valueOf(SENDCOUNT)};
             }
             else {
-                selection = new String("MediaURI =  ? )");
+                selection = new String("MediaURI =  ? ");
                 selectionArgs = new String[]{ eventList.get(0) };
             }
 
@@ -429,7 +430,6 @@ public class ODDCclass implements ODDCinterface {
                     }
                 }
                 status = controller.postDataPackage(dataPackage); //yz
-
                 if (status == null) MainActivity.nsc.sentToFLA(-1);
                 else {
                     if (status != HttpStatus.OK) {
@@ -440,7 +440,6 @@ public class ODDCclass implements ODDCinterface {
                         String sqlStmt = "update oddc set DataUploaded = 1 where rowid in ( select rowid from oddc where rowid % "+String.valueOf(SAMPLE_FREQ)+" = 0 and DataUploaded = 0 limit "+String.valueOf(SENDCOUNT)+" )";
                         db.execSQL(sqlStmt);
                         if (ptype == DataPackageType.EVENT) eventList.remove(0);
-                        Log.d("ALFREDO","SendToFLA DataPackageType="+ptype);
                 	}
                 }
             }
@@ -448,11 +447,8 @@ public class ODDCclass implements ODDCinterface {
     }
 
     private static String getTimestamp(){
-        //SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss.SSS" );
-        //SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-mm-dd hh:mm:ss.fffffffff" );
         SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
         Date date = new Date();
-
         return dateFormat.format(date);
     }
 }

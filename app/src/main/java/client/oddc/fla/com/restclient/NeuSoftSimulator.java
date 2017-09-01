@@ -112,13 +112,18 @@ public class NeuSoftSimulator implements NeuSoftInterface {
         cd.ldwTimeStamp = dateTime;
         cd.ldwDistanceToLeftLane = getRandomFloat();
         cd.ldwDistanceToRightLane = getRandomFloat();
-        cd.ldwEvent = 0;
+        cd.ldwEvent = getRandomInt() % 3;
         cd.mediaURI = currentFilename;
 Log.d("ALFREDO MKCONTDATA","currentFilename="+currentFilename);
         return cd;
     }
 
     // TESTING ONLY
+    private int getRandomInt()
+    {
+        int randomNumber = 0 + (int)(Math.random() * 10);
+        return randomNumber;
+    }
     private float getRandomFloat()
     {
         float randomNumber = 0 + (float)(Math.random() * 100);
@@ -141,6 +146,9 @@ Log.d("ALFREDO MKCONTDATA","currentFilename="+currentFilename);
         Date date = new Date();
         return dateFormat.format(date)+".mp4";
     }
+
+
+
 }
 
 
