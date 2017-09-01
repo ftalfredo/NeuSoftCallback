@@ -273,8 +273,10 @@ public class ODDCclass implements ODDCinterface {
 
         if (currentVideoFile == "NA") currentVideoFile = data.mediaURI;
         if (currentVideoFile != data.mediaURI){
-            SendToFLA fla = new SendToFLA(DataPackageType.EVENT);
-            fla.start();
+            if (eventList.size() > 0) {
+                SendToFLA fla = new SendToFLA(DataPackageType.EVENT);
+                fla.start();
+            }
         }
         currentVideoFile = data.mediaURI;
 
@@ -437,7 +439,13 @@ public class ODDCclass implements ODDCinterface {
                         Log.e("ALFREDO ERR","SendToFLA HttpStatus NOT OK");
                     }
                     else {
-                        String sqlStmt = "update oddc set DataUploaded = 1 where rowid in ( select rowid from oddc where rowid % "+String.valueOf(SAMPLE_FREQ)+" = 0 and DataUploaded = 0 limit "+String.valueOf(SENDCOUNT)+" )";
+                        String sqlStmt;
+                        if (ptype == DataPackageType.CONTINUOUS) {
+                            sqlStmt = "update oddc set DataUploaded = 1 where rowid in ( select rowid from oddc where rowid % " + String.valueOf(SAMPLE_FREQ) + " = 0 and DataUploaded = 0 limit " + String.valueOf(SENDCOUNT) + " )";
+                        }
+                        else {
+                            sqlStmt = "update oddc set DataUploaded = 1,mediaUploaded = 1  where mediaURI = "+eventList.get(0);
+                        }
                         db.execSQL(sqlStmt);
                         if (ptype == DataPackageType.EVENT) eventList.remove(0);
                 	}
